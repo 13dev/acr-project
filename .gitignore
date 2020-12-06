@@ -36,4 +36,5 @@ Homestead.json
 .phpunit.result.cache
 /.idea
 public/css/app.css
+public/js/app.js
 
