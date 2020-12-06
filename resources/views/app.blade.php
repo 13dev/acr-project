@@ -8,9 +8,9 @@
 
     <title>{{ config('app.name') }}</title>
 
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Music stream platform.">
+    <meta name="keywords" content="music, laravel, tailwind">
+    <meta name="author" content="Leo Oliveira">
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.2/css/all.css"/>
