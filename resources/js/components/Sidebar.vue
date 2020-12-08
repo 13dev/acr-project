@@ -39,13 +39,16 @@
                 </li>
             </ul>
         </div>
-
+        <cover></cover>
     </div>
 </template>
-
 <script>
+import Cover from "./Cover";
 export default {
     name: 'sidebar',
+    components: {
+      Cover
+    },
     data() {
         return {}
     }

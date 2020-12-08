@@ -5,7 +5,6 @@
 
             <div class="flex-1 relative overflow-y-scroll">
                 <!-- search -->
-
                 <div class="p-6 flex justify-center overflow-y-scroll">
                     <div class="w-full">
                         <router-view></router-view>
@@ -13,17 +12,20 @@
                 </div>
             </div>
         </div>
-        <!-- player -->
+        <player></player>
     </div>
 </template>
 
 <script>
 import Sidebar from "./Sidebar";
+import Player from "./Player";
 
 export default {
     name: 'app',
+
     components: {
-        Sidebar
+        Sidebar,
+        Player
     }
 }
 </script>
