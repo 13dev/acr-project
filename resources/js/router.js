@@ -23,25 +23,26 @@ export const routes = [
 
     {
         path: '/artists',
-        component: import('./views/Artists/Index'),
+        component: () => import('./views/Artists/Index'),
         name: 'artists',
     },
 
     {
         path: '/artists/:id',
-        component: import('./views/Artists/Show'),
+        component: () => import('./views/Artists/Show'),
         name: 'artist',
     },
 
     {
         path: '/albums',
-        component: import('./views/Albums/Index'),
+        component: () => import('./views/Albums/Index'),
         name: 'albums',
     },
 
     {
         path: '/albums/:id',
-        component: import('./views/Albums/Show'),
+        component: () => import('./views/Albums/Show'),
         name: 'album',
     },
 ];
+

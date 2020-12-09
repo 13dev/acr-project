@@ -4,8 +4,8 @@
             <sidebar></sidebar>
 
             <div class="flex-1 relative overflow-y-scroll">
-                <!-- search -->
-                <div class="p-6 flex justify-center overflow-y-scroll">
+                <search></search>
+                <div class="p-6 flex justify-center h-full">
                     <div class="w-full">
                         <router-view></router-view>
                     </div>
@@ -19,13 +19,15 @@
 <script>
 import Sidebar from "./Sidebar";
 import Player from "./Player";
+import Search from "./Search";
 
 export default {
     name: 'app',
 
     components: {
         Sidebar,
-        Player
+        Player,
+        Search,
     }
 }
 </script>

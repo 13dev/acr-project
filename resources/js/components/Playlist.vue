@@ -1,5 +1,7 @@
 <template>
     <div>
+
+
         <div v-if="separateDiscs">
             <div v-for="(songs, disc) in discs" :key="disc" class="mt-6">
                 <div v-if="hasMultipleDiscs" class="mb-2 text-xl font-bold">
@@ -20,7 +22,7 @@
                     </thead>
                     <tbody class="text-sm tracking-wide">
                     <app-track v-for="song in songs" :key="song.id" :song="song" :displayArtist="displayArtist"
-                               :displayAlbum="displayAlbum"></app-track>
+                           :displayAlbum="displayAlbum"></app-track>
                     </tbody>
                 </table>
             </div>
@@ -40,8 +42,12 @@
                 </tr>
                 </thead>
                 <tbody class="text-sm tracking-wide">
-                <app-track v-for="song in songs" :key="song.id" :song="song" :displayArtist="displayArtist"
-                           :displayAlbum="displayAlbum"></app-track>
+                    <app-track v-for="song in songs"
+                           :key="song.id"
+                           :song="song"
+                           :displayArtist="displayArtist"
+                           :displayAlbum="displayAlbum">
+                    </app-track>
                 </tbody>
             </table>
         </div>
@@ -51,9 +57,15 @@
 <script>
 import _ from 'lodash'
 import {mapActions} from 'vuex'
+import Track from './Track'
+import AppTrack from "./Track";
 
 export default {
     name: 'Playlist',
+    components: {
+        AppTrack,
+        Track
+    },
     props: {
         songs: {
             required: true,
@@ -89,6 +101,7 @@ export default {
     watch: {
         songs(songs) {
             this.pushToTempQueue(this.songs)
+            console.log(this.songs);
         }
     },
     methods: {
@@ -98,6 +111,7 @@ export default {
     },
     created() {
         this.pushToTempQueue(this.songs)
+
     }
 }
 </script>

@@ -27,8 +27,10 @@
 import {mapActions, mapGetters} from 'vuex'
 
 export default {
-    name: 'Track',
-
+    name: 'AppTrack',
+    created() {
+      console.log('created track', this.song);
+    },
     props: {
         song: {
             required: true,

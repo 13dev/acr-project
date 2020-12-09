@@ -55,6 +55,7 @@ export default {
         },
 
         SET_SONG(state, payload) {
+
             state.song = payload.song
             state.source = '/api/stream/' + payload.song.id
 
