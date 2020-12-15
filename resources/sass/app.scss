@@ -1,15 +1,18 @@
 //@import "~tailwindcss/dist/base.min.css";
 //@import "~tailwindcss/dist/components.min.css";
 //@import "~tailwindcss/dist/utilities.min.css";
-
 @tailwind base;
 @tailwind components;
-
 @tailwind utilities;
 
 @import "layout/sidebar";
 
+$plyr-color-main: theme('colors.green.500');
+$plyr-audio-controls-background: transparent;
+$plyr-audio-control-color: #fff;
+
 @import "~plyr/src/sass/plyr";
+
 
 .plyr {
     height: 100%;
