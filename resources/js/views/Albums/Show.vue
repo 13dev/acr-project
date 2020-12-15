@@ -1,15 +1,18 @@
 <template>
     <div>
         <div class="flex items-end">
-            <img :src="'/' + album.cover" :alt="album.name" class="h-full rounded-lg mr-6"
+            <img :src="'/' + album.cover" :alt="album.name" class="album--image"
                  style="width: 220px; max-height: 220px;">
 
             <div>
-                <!-- <span class="text-xs uppercase block tracking-widest font-semibold mb-1">Album</span> -->
                 <h1 class="font-bold text-5xl text-white leading-none mb-3">{{ album.name }}</h1>
                 <h2 class="text-sm">By
-                    <router-link tag="button" :to="'/artists/' + artist.id"
-                                 class="hover:underline text-white focus:outline-none">{{ artist.name }}
+                    <router-link
+                        tag="button"
+                        :to="'/artists/' + artist.id"
+                        class="hover:underline text-white focus:outline-none"
+                    >
+                        {{ artist.name }}
                     </router-link>
                 </h2>
                 <h3 class="text-sm mb-2">

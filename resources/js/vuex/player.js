@@ -76,6 +76,26 @@ export default {
             }
         },
 
+        IS_CURRENTLY_PLAYING: (state, currentSong) => {
+            if (!state.song || currentSong == null) {
+                return false;
+            }
+
+            return currentSong.id === state.song.id;
+        },
+
+        PLAYTIME: state => {
+            if(state.song == null) {
+                return 0;
+            }
+
+            let seconds = Math.floor(state.song.length)
+            let minutes = Math.floor(seconds / 60)
+
+            seconds = seconds - (minutes * 60)
+            return minutes + ':' + (seconds.toString().padStart(2, 0))
+        },
+
         SET_QUEUE(state, payload) {
             state.queue = payload.queue
         },
@@ -96,6 +116,7 @@ export default {
             commit('INITIALIZE', {
                 player: player
             })
+            commit('PLAYTIME')
         },
 
         play({commit}) {
@@ -106,6 +127,7 @@ export default {
             commit('SET_SONG', {
                 song: song
             })
+
         },
 
         setQueue({commit}, songs) {
@@ -135,5 +157,16 @@ export default {
         togglePlay({commit}) {
             commit('TOGGLE_PLAY')
         },
+
+
+        isCurrentlyPlaying({commit}, currentSong) {
+            commit('IS_CURRENTLY_PLAYING', {
+                currentSong: currentSong,
+            })
+        },
+
+        playtime({commit}) {
+            commit('PLAYTIME')
+        }
     },
 }

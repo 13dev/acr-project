@@ -40,7 +40,7 @@
                         <p>Nothing found :(</p>
                     </div>
 
-                    <div v-if="! query" class="text-xs text-black">
+                    <div v-if="!query" class="text-xs text-black">
                         <p>Looking for something?</p>
                     </div>
                 </div>

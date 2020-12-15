@@ -14,6 +14,13 @@ $plyr-audio-control-color: #fff;
 @import "~plyr/src/sass/plyr";
 
 
+.album--image {
+    @apply .h-full .rounded-lg .mr-6;
+    width: 220px;
+    max-height: 220px;
+}
+
+
 .plyr {
     height: 100%;
     width :100%;

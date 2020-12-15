@@ -13,7 +13,6 @@
                 <li class="sidebar__label">
                     Your Library
                 </li>
-
                 <li class="sidebar__item">
                     <router-link tag="button" to="/recently-added" class="sidebar__link">
                         Recently Added

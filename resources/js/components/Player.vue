@@ -45,18 +45,17 @@ export default {
     },
     mounted() {
         let player = new Plyr(this.$refs.player, this.opts)
-        player.on('ended', function() {
-            let current = _.findIndex(this.queue, function(song) {
-                return song.id === this.song.id
-            }.bind(this))
-            let next = current + 1
+
+        player.on('ended', () => {
+            let next = _.findIndex(this.queue, (song) => song.id === this.song.id) + 1;
 
             if (!this.queue[next]) {
                 next = 0
             }
 
-            this.setSong(this.queue[next])
-        }.bind(this))
+            this.setSong(this.queue[next]);
+        });
+
         this.initialize(player)
     },
 
