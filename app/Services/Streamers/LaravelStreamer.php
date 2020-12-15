@@ -14,6 +14,8 @@ class LaravelStreamer extends Streamer
             return null;
         }
 
+        dump( storage_path('app/' . $this->song->path));
+
         $response = new BinaryFileResponse(
             storage_path('app/' . $this->song->path)
         );
