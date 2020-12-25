@@ -14,6 +14,7 @@ class SongResource extends JsonResource
             'track' => $this->track,
             'disc' => $this->disc,
             'length' => $this->length,
+            'playtime' => $this->playtime,
             'path' => $this->path,
             'mtime' => $this->mtime,
             'artist' => new ArtistResource($this->album->artist),

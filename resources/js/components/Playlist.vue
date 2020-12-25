@@ -92,16 +92,13 @@ export default {
         },
         hasMultipleDiscs() {
             let i = 0
-            _.each(this.discs, function () {
-                i++
-            })
+            _.each(this.discs, () => i++)
             return i > 1
         }
     },
     watch: {
         songs(songs) {
             this.pushToTempQueue(this.songs)
-            console.log(this.songs);
         }
     },
     methods: {

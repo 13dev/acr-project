@@ -18,7 +18,7 @@
                 <h3 class="text-sm mb-2">
                     <template v-if="album.year">{{ album.year }}</template>
                     <template v-if="songCount"><span class="mx-1">•</span> {{ songCount }}</template>
-                    <template v-if="albumLength"><span class="mx-1">•</span> {{ playtime(albumLength) }}</template>
+                    <template v-if="album.playtime"><span class="mx-1">•</span> {{ album.playtime }}</template>
                     <template v-if="album.genre"><span class="mx-1">•</span> {{ album.genre }}</template>
                 </h3>
                 <button
@@ -67,31 +67,11 @@ export default {
             }
         },
 
-        albumLength() {
-            let length = 0
-
-            if (this.songs) {
-                this.songs.forEach(function (song) {
-                    length += parseFloat(song.length)
-                })
-            }
-
-            return length
-        }
     },
 
     methods: {
         setAlbum(album) {
             this.album = album
-        },
-
-        playtime(length) {
-            let seconds = Math.floor(length)
-            let minutes = Math.floor(seconds / 60)
-
-            seconds = seconds - (minutes * 60)
-
-            return minutes + ':' + (seconds.toString().padStart(2, 0))
         },
     },
 
@@ -107,12 +87,10 @@ export default {
     },
 
     beforeRouteUpdate(to, from, next) {
-
         axios.all([
             axios.get('/api/albums/' + to.params.id),
         ]).then(axios.spread(function (album) {
             this.setAlbum(album.data.data)
-
             next()
         }))
     },

@@ -3,7 +3,7 @@
         <td class="p-2 w-10">{{ song.track }}</td>
         <td class="p-2 w-10">
             <i
-                v-if="isCurrentlyPlaying(currentSong)"
+                v-if="isCurrentlyPlaying()"
                 class="fas fa-compact-disc fa-spin text-axiom-500"
             ></i>
 
@@ -33,7 +33,7 @@
                 {{ song.album.name }}
             </router-link>
         </td>
-        <td class="p-2 w-16">{{ this.playtime() }}</td>
+        <td class="p-2 w-16">{{ song.playtime }}</td>
         <td class="p-2 w-16"></td>
     </tr>
 </template>
@@ -68,21 +68,13 @@ export default {
             'setSong',
             'play',
             'isCurrentlyPlaying',
-            'playtime'
         ]),
-        // playtime(length) {
-        //     let seconds = Math.floor(length)
-        //     let minutes = Math.floor(seconds / 60)
-        //
-        //     seconds = seconds - (minutes * 60)
-        //     return minutes + ':' + (seconds.toString().padStart(2, 0))
-        // },
-        // isCurrentlyPlaying() {
-        //     if (!this.currentSong) {
-        //         return false
-        //     }
-        //     return this.currentSong.id === this.song.id
-        // }
+        isCurrentlyPlaying() {
+            if (!this.currentSong) {
+                return false
+            }
+            return this.currentSong.id === this.song.id
+        }
     },
 }
 </script>

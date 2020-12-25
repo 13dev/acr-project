@@ -27,4 +27,14 @@ class Album extends Model implements Searchable
             ->orderBy('disc')
             ->orderBy('track');
     }
+
+    public function getPlaytimeAttribute()
+    {
+        if($this->relationLoaded('songs')) {
+            $allSongsLength = $this->songs->sum(fn ($song) => $song->length);
+            return gmdate("i:s", $allSongsLength);
+        }
+
+        return 0;
+    }
 }

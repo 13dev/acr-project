@@ -55,7 +55,7 @@ export default {
 
             this.setSong(this.queue[next]);
         });
-
+        console.log('source')
         this.initialize(player)
     },
 

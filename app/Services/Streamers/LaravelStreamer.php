@@ -17,7 +17,6 @@ class LaravelStreamer extends Streamer
         $response = new BinaryFileResponse(
             storage_path('app/' . $this->song->path)
         );
-
         BinaryFileResponse::trustXSendfileTypeHeader();
 
         return $response;
