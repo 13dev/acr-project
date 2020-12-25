@@ -14,8 +14,12 @@ class AlbumResource extends JsonResource
             'year' => $this->year,
             'genre' => $this->genre,
             'cover' => 'storage/covers/' . $this->cover,
-            'artist' => new ArtistResource($this->whenLoaded('artist')),
-            'songs' => SongResource::collection($this->whenLoaded('songs')),
+            'artist' => new ArtistResource(
+                $this->whenLoaded('artist')
+            ),
+            'songs' => SongResource::collection(
+                $this->whenLoaded('songs')
+            ),
         ];
     }
 }

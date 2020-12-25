@@ -20,7 +20,8 @@ class AlbumController extends Controller
 
     public function show(Album $album)
     {
-        $album->load('artist', 'songs')->withCount('songs');
+        $album->load('artist', 'songs')
+            ->withCount('songs');
 
         return new AlbumResource($album);
     }
