@@ -91,9 +91,7 @@ export default {
             return _.groupBy(this.songs, 'disc')
         },
         hasMultipleDiscs() {
-            let i = 0
-            _.each(this.discs, () => i++)
-            return i > 1
+            return _.size(this.discs) > 1
         }
     },
     watch: {

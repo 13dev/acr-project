@@ -9,6 +9,9 @@
                              class="block focus:outline-none hover:underline">{{ song.artist.name }}
                 </router-link>
             </div>
+            <div v-else>
+                <p class="block focus:outline-none">No Track Selected</p>
+            </div>
         </div>
 
         <div class="w-full flex items-center">
@@ -55,7 +58,7 @@ export default {
 
             this.setSong(this.queue[next]);
         });
-        console.log('source')
+
         this.initialize(player)
     },
 
