@@ -11,11 +11,6 @@ class Artist extends Model implements Searchable
 {
     use HasFactory;
 
-    public function getSearchResult(): SearchResult
-    {
-        return new SearchResult($this, $this->name, '/artists/' . $this->getKey());
-    }
-
     /**
      * An artist has many albums.
      *
@@ -23,7 +18,8 @@ class Artist extends Model implements Searchable
      */
     public function albums()
     {
-        return $this->hasMany(Album::class)->orderBy('year', 'desc');
+        return $this->hasMany(Album::class)
+            ->orderBy('year', 'desc');
     }
 
     /**
@@ -34,5 +30,13 @@ class Artist extends Model implements Searchable
     public function songs()
     {
         return $this->hasManyThrough(Song::class, Album::class);
+    }
+
+    /**
+     * @return SearchResult
+     */
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult($this, $this->name, '/artists/' . $this->getKey());
     }
 }

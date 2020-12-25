@@ -20,7 +20,7 @@ class Song extends Model implements Searchable
         'path',
         'mtime',
         'explicit',
-        'compilation'
+        'compilation',
     ];
 
     /**
@@ -29,20 +29,13 @@ class Song extends Model implements Searchable
      */
     public function getSearchResult(): SearchResult
     {
-        return new SearchResult($this, $this->title, "/albums/{$this->album->id}");
+        return new SearchResult($this, $this->title, '/albums/' . $this->album->id);
     }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-
 
     /**
      * A song belongs to an album.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function album()
     {

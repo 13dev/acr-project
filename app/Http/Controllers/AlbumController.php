@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Http\Resources\AlbumResource;
 
@@ -23,6 +22,6 @@ class AlbumController extends Controller
     {
         $album->load('artist', 'songs')->withCount('songs');
 
-        return (new AlbumResource($album));
+        return new AlbumResource($album);
     }
 }
