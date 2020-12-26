@@ -3,7 +3,7 @@
 namespace App\Http\Song;
 
 use App\Core\Controller;
-use App\Models\Song;
+use App\Domain\Song\Song;
 use Illuminate\Http\Request;
 
 class StreamController extends Controller

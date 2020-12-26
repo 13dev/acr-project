@@ -3,8 +3,8 @@
 namespace App\Http\User;
 
 use App\Core\Controller;
+use App\Domain\User\Artist;
 use App\Http\User\Resources\ArtistResource;
-use App\Models\Artist;
 use Illuminate\Http\Request;
 
 class ArtistController extends Controller

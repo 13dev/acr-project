@@ -3,8 +3,8 @@
 namespace App\Http\Song;
 
 use App\Core\Controller;
+use App\Domain\Song\Song;
 use App\Http\Song\Resources\SongResource;
-use App\Models\Song;
 use Illuminate\Http\Request;
 
 class RecentlyAddedController extends Controller
