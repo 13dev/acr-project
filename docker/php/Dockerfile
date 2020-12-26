@@ -47,7 +47,17 @@ RUN docker-php-ext-enable pdo_mysql
 RUN apk add --update nodejs nodejs-npm
 
 #install youtube-dl
-RUN apk add --update ffmpeg youtube-dl
+#RUN apk add --update ffmpeg youtube-dl
+
+RUN apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev && \
+    apk add --no-cache --update python3
+
+RUN apk add --no-cache py3-pip
+RUN pip3 install spotdl
+#
+#
+#RUN pip3 install docker-python-dev
+#RUN pip3 install spotdl
 
 # install xdebug and enable it if the development environment is local
 RUN if [ $APP_ENV = "local" ]; then \

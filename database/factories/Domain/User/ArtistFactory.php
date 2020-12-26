@@ -22,7 +22,7 @@ class ArtistFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->firstName . ' ' . $this->faker->lastName,
         ];
     }
 }
