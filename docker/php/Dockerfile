@@ -31,6 +31,13 @@ RUN apk update && apk add --no-cache $PHPIZE_DEPS \
    php7-session \
    php7-zlib
 
+RUN apk add --no-cache freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev && \
+  docker-php-ext-configure gd \
+    --with-freetype \
+    --with-jpeg \
+  NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
+  docker-php-ext-install -j$(nproc) gd && \
+  apk del --no-cache freetype-dev libpng-dev libjpeg-turbo-dev
 
 # Install extensions
 RUN docker-php-ext-install pdo pdo_mysql
@@ -38,6 +45,19 @@ RUN docker-php-ext-enable pdo_mysql
 
 #install npm
 RUN apk add --update nodejs nodejs-npm
+
+#install youtube-dl
+#RUN apk add --update ffmpeg youtube-dl
+
+RUN apk add --no-cache --virtual .build-deps g++ python3-dev libffi-dev openssl-dev && \
+    apk add --no-cache --update python3
+
+RUN apk add --no-cache py3-pip
+RUN pip3 install spotdl
+#
+#
+#RUN pip3 install docker-python-dev
+#RUN pip3 install spotdl
 
 # install xdebug and enable it if the development environment is local
 RUN if [ $APP_ENV = "local" ]; then \

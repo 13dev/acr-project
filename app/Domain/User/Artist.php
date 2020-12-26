@@ -2,14 +2,14 @@
 
 namespace App\Domain\User;
 
+use App\Core\UuidModel;
 use App\Domain\Album\Album;
 use App\Domain\Song\Song;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class Artist extends Model implements Searchable
+class Artist extends UuidModel implements Searchable
 {
     use HasFactory;
 

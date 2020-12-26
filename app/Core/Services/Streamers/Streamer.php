@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Core\Services\Streamers;
 
-
-use App\Models\Song;
+use App\Domain\Song\Song;
 
 abstract class Streamer implements Streamable
 {
