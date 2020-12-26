@@ -4,7 +4,7 @@ namespace App\Http\Auth\Controllers;
 
 use App\Core\Controller;
 use App\Core\Providers\RouteServiceProvider;
-use App\Models\User;
+use App\Domain\User\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

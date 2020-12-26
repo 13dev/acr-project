@@ -3,10 +3,10 @@
 namespace App\Http\Search;
 
 use App\Core\Controller;
+use App\Domain\Album\Album;
+use App\Domain\Song\Song;
+use App\Domain\User\Artist;
 use App\Http\Search\Resources\SearchResource;
-use App\Models\Song;
-use App\Models\Album;
-use App\Models\Artist;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 
