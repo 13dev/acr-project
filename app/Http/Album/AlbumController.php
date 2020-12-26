@@ -3,8 +3,8 @@
 namespace App\Http\Album;
 
 use App\Core\Controller;
+use App\Domain\Album\Album;
 use App\Http\Album\Resources\AlbumResource;
-use App\Models\Album;
 
 class AlbumController extends Controller
 {

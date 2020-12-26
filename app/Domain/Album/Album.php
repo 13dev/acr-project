@@ -2,6 +2,7 @@
 
 namespace App\Domain\Album;
 
+use App\Domain\Song\Song;
 use App\Domain\User\Artist;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
