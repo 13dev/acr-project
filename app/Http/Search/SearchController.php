@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Search;
 
+use App\Core\Controller;
+use App\Http\Search\Resources\SearchResource;
 use App\Models\Song;
 use App\Models\Album;
 use App\Models\Artist;
 use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
-use Illuminate\Routing\Controller;
-use App\Http\Resources\SearchResource;
 
 class SearchController extends Controller
 {

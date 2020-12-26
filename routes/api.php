@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\ArtistController;
-use App\Http\Controllers\RecentlyAddedController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\SongController;
-use App\Http\Controllers\StreamController;
+use App\Http\Album\AlbumController;
+use App\Http\Album\ArtistController;
+use App\Http\Album\RecentlyAddedController;
+use App\Http\Album\SearchController;
+use App\Http\Album\SongController;
+use App\Http\Album\StreamController;
 use Illuminate\Support\Facades\Route;
 
 /*

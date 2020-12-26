@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\User;
 
+use App\Core\Controller;
+use App\Http\User\Resources\ArtistResource;
 use App\Models\Artist;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use App\Http\Resources\ArtistResource;
 
 class ArtistController extends Controller
 {

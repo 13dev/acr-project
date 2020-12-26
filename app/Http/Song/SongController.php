@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Song;
 
+use App\Core\Controller;
+use App\Http\Song\Resources\SongResource;
 use App\Models\Song;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use App\Http\Resources\SongResource;
 
 class SongController extends Controller
 {

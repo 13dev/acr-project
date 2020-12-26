@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Album;
 
+use App\Core\Controller;
+use App\Http\Album\Resources\AlbumResource;
 use App\Models\Album;
-use Illuminate\Routing\Controller;
-use App\Http\Resources\AlbumResource;
 
 class AlbumController extends Controller
 {

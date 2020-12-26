@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\User\Resources;
 
+use App\Http\Album\Resources\AlbumResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ArtistResource extends JsonResource

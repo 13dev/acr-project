@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\User;
 
+use App\Domain\Album\Album;
+use App\Domain\Song\Song;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Searchable\Searchable;
