@@ -46,6 +46,9 @@ RUN docker-php-ext-enable pdo_mysql
 #install npm
 RUN apk add --update nodejs nodejs-npm
 
+#install youtube-dl
+RUN apk add --update ffmpeg youtube-dl
+
 # install xdebug and enable it if the development environment is local
 RUN if [ $APP_ENV = "local" ]; then \
    pecl install xdebug; \
