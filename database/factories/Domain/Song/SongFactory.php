@@ -6,6 +6,7 @@ use App\Domain\Album\Album;
 use App\Domain\Song\Song;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Storage;
 
 class SongFactory extends Factory
 {
@@ -23,15 +24,14 @@ class SongFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->title;
-
         return [
-            'title' => $title,
-            'track' => $this->faker->title,
+            'title' =>  $this->faker->firstName . ' ' . $this->faker->lastName,
+            'track' => $this->faker->numberBetween(0, 3),
             'disc' => $this->faker->boolean,
             'length' => $this->faker->numberBetween(0, 10),
-            'path' => Str::slug($title).'.mp3',
+            'path' => 'warden.mp3',
             'mtime' => $this->faker->numberBetween(0, 10),
+            'album_id' => Album::factory(),
         ];
     }
 }

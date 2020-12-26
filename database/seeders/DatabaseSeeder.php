@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Domain\Song\Song;
 use App\Domain\User\Artist;
 use Illuminate\Database\Seeder;
 
@@ -16,5 +17,7 @@ class DatabaseSeeder extends Seeder
     {
 
         // \App\Models\User::factory(10)->create();
+        Song::factory(10)->create();
+
     }
 }
