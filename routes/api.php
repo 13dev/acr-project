@@ -1,12 +1,5 @@
 <?php
 
-use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\ArtistController;
-use App\Http\Controllers\RecentlyAddedController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\SongController;
-use App\Http\Controllers\StreamController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +11,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+use App\Http\Album\AlbumController;
+use App\Http\Search\SearchController;
+use App\Http\Song\RecentlyAddedController;
+use App\Http\Song\SongController;
+use App\Http\Song\StreamController;
+use App\Http\User\ArtistController;
 
 Route::get('/stream/{song}', [StreamController::class, 'show']);
 
