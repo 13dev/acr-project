@@ -15,7 +15,6 @@ class Song extends UuidModel implements Searchable
     protected $fillable = [
         'album_id',
         'title',
-        'track',
         'disc',
         'length',
         'path',

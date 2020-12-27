@@ -1,7 +1,5 @@
 <template>
     <div>
-
-
         <div v-if="separateDiscs">
             <div v-for="(songs, disc) in discs" :key="disc" class="mt-6">
                 <div v-if="hasMultipleDiscs" class="mb-2 text-xl font-bold">
@@ -21,8 +19,13 @@
                     </tr>
                     </thead>
                     <tbody class="text-sm tracking-wide">
-                    <app-track v-for="song in songs" :key="song.id" :song="song" :displayArtist="displayArtist"
-                           :displayAlbum="displayAlbum"></app-track>
+                    <app-track v-for="song in songs"
+                               :key="song.id"
+                               :song="song"
+                               :displayArtist="displayArtist"
+                               :displayAlbum="displayAlbum"
+                               :songtrack="songTrack(songs,song)"
+                    ></app-track>
                     </tbody>
                 </table>
             </div>
@@ -45,6 +48,7 @@
                     <app-track v-for="song in songs"
                            :key="song.id"
                            :song="song"
+                           :songtrack="songTrack(songs,song)"
                            :displayArtist="displayArtist"
                            :displayAlbum="displayAlbum">
                     </app-track>
@@ -92,7 +96,7 @@ export default {
         },
         hasMultipleDiscs() {
             return _.size(this.discs) > 1
-        }
+        },
     },
     watch: {
         songs(songs) {
@@ -102,7 +106,10 @@ export default {
     methods: {
         ...mapActions('player', [
             'pushToTempQueue',
-        ])
+        ]),
+        songTrack(object, value) {
+            return parseInt(Object.keys(object).find(key => object[key] === value)) + 1;
+        }
     },
     created() {
         this.pushToTempQueue(this.songs)
