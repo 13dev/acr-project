@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Song;
 
-use App\Core\Controller;
+namespace App\Http\Song\Actions;
+
 use App\Domain\Song\Song;
 use App\Http\Song\Resources\SongResource;
-use Illuminate\Http\Request;
 
-class RecentlyAddedController extends Controller
+class RecentlyAddedAction
 {
-    public function index()
+    public function __invoke()
     {
         $songs = Song::orderBy('album_id', 'desc')
             ->orderBy('track')
