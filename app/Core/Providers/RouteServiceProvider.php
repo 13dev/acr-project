@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var array
      */
     protected $domains = [
-        'User',
+        'Artist',
         'Auth',
         'Song',
         'Album',

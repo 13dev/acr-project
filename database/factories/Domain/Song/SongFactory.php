@@ -60,7 +60,6 @@ class SongFactory extends Factory
 
         return [
             'title' => $musicDetails->getTitle(),
-            'track' => $this->faker->numberBetween(0, 3),
             'disc' => $this->faker->boolean,
             'length' => $musicDetails->getDuration(),
             'path' => $music->getFileWithExtension(),

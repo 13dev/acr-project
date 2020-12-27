@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Domain\Song\Song;
-use App\Domain\User\Artist;
+use App\Domain\Artist\Artist;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

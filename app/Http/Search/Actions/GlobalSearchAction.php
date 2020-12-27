@@ -6,7 +6,7 @@ namespace App\Http\Search\Actions;
 
 use App\Domain\Album\Album;
 use App\Domain\Song\Song;
-use App\Domain\User\Artist;
+use App\Domain\Artist\Artist;
 use App\Http\Search\Resources\SearchResource;
 use Spatie\Searchable\Search;
 

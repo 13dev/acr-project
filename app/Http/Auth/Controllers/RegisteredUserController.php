@@ -4,7 +4,7 @@ namespace App\Http\Auth\Controllers;
 
 use App\Core\Controller;
 use App\Core\Providers\RouteServiceProvider;
-use App\Domain\User\User;
+use App\Domain\Artist\Artist;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|confirmed|min:8',
         ]);
 
-        Auth::login($user = User::create([
+        Auth::login($user = Artist::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),

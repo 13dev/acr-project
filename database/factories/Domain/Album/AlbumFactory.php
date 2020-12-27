@@ -3,7 +3,7 @@
 namespace Database\Factories\Domain\Album;
 
 use App\Domain\Album\Album;
-use App\Domain\User\Artist;
+use App\Domain\Artist\Artist;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
