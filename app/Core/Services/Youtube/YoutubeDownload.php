@@ -4,6 +4,7 @@
 namespace App\Core\Services\Youtube;
 
 use Illuminate\Support\Str;
+use Storage;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -62,7 +63,7 @@ class YoutubeDownload
         }
 
         if ($this->withThumbnail) {
-            $this->downloadThumnail();
+            $this->downloadThumbnail();
         }
 
         return $youtubeObject;
@@ -124,26 +125,27 @@ class YoutubeDownload
 
     }
 
-    private function downloadThumnail(): void
+    private function downloadThumbnail(): void
     {
+        $youtubeObject = $this->getYoutubeObject();
         $process = Process::fromShellCommandline('youtube-dl \
-            --write-thumbnail \
             --skip-download \
-            --output "$outputPath$outputName.%(ext)s" \
+            --get-id \
             "$url"
         ');
 
-        $youtubeObject = $this->getYoutubeObject();
-
         $process->run(null, [
             'url' => $youtubeObject->getUrl(),
-            'outputName' => $youtubeObject->getThumbName(),
-            'outputPath' => $youtubeObject->getThumbPath(),
         ]);
 
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
+
+        $thumbnail = file_get_contents('https://i1.ytimg.com/vi/'.trim($process->getOutput()).'/hqdefault.jpg');
+
+        file_put_contents($youtubeObject->getThumbnailLocation(), $thumbnail);
+
     }
 
     /**
