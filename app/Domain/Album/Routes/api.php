@@ -1,4 +1,7 @@
 <?php
 
-Route::get('/albums', [AlbumController::class, 'index']);
-Route::get('/albums/{album}', [AlbumController::class, 'show']);
+use App\Http\Album\Actions\GetAlbumAction;
+use App\Http\Album\Actions\ListAlbumsAction;
+
+Route::get('/albums', ListAlbumsAction::class);
+Route::get('/albums/{album}', GetAlbumAction::class);

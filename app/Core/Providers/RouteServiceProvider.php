@@ -27,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider
         'User',
         'Auth',
         'Song',
-        'User',
+        'Album',
     ];
 
     /**
