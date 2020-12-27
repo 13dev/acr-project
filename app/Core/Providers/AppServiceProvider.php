@@ -2,6 +2,7 @@
 
 namespace App\Core\Providers;
 
+use App\Core\Services\Youtube\YoutubeDownload;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(YoutubeDownload::class, function ($app, $param) {
+            return new YoutubeDownload($param);
+        });
     }
 
     /**
