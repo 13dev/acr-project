@@ -84,6 +84,32 @@ class YoutubeDownload
         return $this;
     }
 
+    /**
+     * Get Info by Params
+     * @param mixed ...$params
+     * @return mixed
+     * @throws \JsonException
+     */
+    public function getInfo(...$params)
+    {
+        $process = Process::fromShellCommandline('youtube-dl \
+            --print-json \
+            "$url"
+        ');
+
+        $process->run(null, [
+            'url' => $this->getUrl(),
+        ]);
+
+        if(!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        $outputProcess = json_decode($process->getOutput(), true, 512, JSON_THROW_ON_ERROR);
+
+        return array_intersect_key($outputProcess, array_flip($params));
+
+    }
 
     private function downloadThumnail(): void
     {
