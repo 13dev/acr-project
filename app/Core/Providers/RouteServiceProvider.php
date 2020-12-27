@@ -26,6 +26,8 @@ class RouteServiceProvider extends ServiceProvider
     protected $domains = [
         'User',
         'Auth',
+        'Song',
+        'User',
     ];
 
     /**
@@ -73,12 +75,13 @@ class RouteServiceProvider extends ServiceProvider
             $domainRouteApi = app_path('Domain/' . $domain . '/Routes/api.php');
             $domainRouteWeb = app_path('Domain/' . $domain . '/Routes/web.php');
 
-            if (!file_exists($domainRouteApi) || !file_exists($domainRouteWeb)) {
-                continue;
+            if (file_exists($domainRouteApi)) {
+                $routeApi->group($domainRouteApi);
             }
 
-            $routeApi->group($domainRouteApi);
-            $routeWeb->group($domainRouteWeb);
+            if(file_exists($domainRouteWeb)) {
+                $routeWeb->group($domainRouteWeb);
+            }
         }
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Album\Auth\AuthenticatedSessionController;
-use App\Http\Album\Auth\ConfirmablePasswordController;
-use App\Http\Album\Auth\EmailVerificationNotificationController;
-use App\Http\Album\Auth\EmailVerificationPromptController;
-use App\Http\Album\Auth\NewPasswordController;
-use App\Http\Album\Auth\PasswordResetLinkController;
-use App\Http\Album\Auth\RegisteredUserController;
-use App\Http\Album\Auth\VerifyEmailController;
+
+use App\Http\Auth\Controllers\AuthenticatedSessionController;
+use App\Http\Auth\Controllers\ConfirmablePasswordController;
+use App\Http\Auth\Controllers\EmailVerificationNotificationController;
+use App\Http\Auth\Controllers\EmailVerificationPromptController;
+use App\Http\Auth\Controllers\NewPasswordController;
+use App\Http\Auth\Controllers\PasswordResetLinkController;
+use App\Http\Auth\Controllers\RegisteredUserController;
+use App\Http\Auth\Controllers\VerifyEmailController;
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
     ->middleware('guest')
