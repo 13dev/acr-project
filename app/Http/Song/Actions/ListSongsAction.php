@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Song;
 
-use App\Core\Controller;
+namespace App\Http\Song\Actions;
+
+
 use App\Domain\Song\Song;
 use App\Http\Song\Resources\SongResource;
-use Illuminate\Http\Request;
 
-class SongController extends Controller
+class ListSongsAction
 {
-    public function index()
+    public function __invoke()
     {
         return SongResource::collection(Song::all());
     }
