@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Search;
 
-use App\Core\Controller;
+namespace App\Http\Search\Actions;
+
+
 use App\Domain\Album\Album;
 use App\Domain\Song\Song;
 use App\Domain\User\Artist;
 use App\Http\Search\Resources\SearchResource;
-use Illuminate\Http\Request;
 use Spatie\Searchable\Search;
 
-class SearchController extends Controller
+class GlobalSearchAction
 {
-    public function index($query = '')
+    public function __invoke($query = '')
     {
         $results = (new Search)
             ->registerModel(Artist::class, ['name'])
