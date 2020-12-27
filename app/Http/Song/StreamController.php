@@ -3,10 +3,11 @@
 namespace App\Http\Song;
 
 use App\Core\Controller;
-use App\Core\Services\Streamers\LaravelStreamer;
 use App\Domain\Song\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Storage;
+use App\Core\Services\Youtube\Facades\YoutubeDownload;
 
 class StreamController extends Controller
 {
@@ -28,10 +29,15 @@ class StreamController extends Controller
 //        dump($response);
 //        return $response;
 //        \Storage::readStream($song);
-//        dump( storage_path('app/' . 345));
-        $streamer = new LaravelStreamer();
-        $streamer->setSong($song);
-        return $streamer->stream();
+
+        return response()->download(storage_path('app/' . $song->path), null, [
+            'Content-Type' => 'audio/mpeg'
+        ]);
+//        $streamer = new LaravelStreamer();
+//        $streamer->setSong($song);
+//
+//
+//        return $streamer->stream();
 
     }
 }

@@ -9,33 +9,36 @@ use Symfony\Component\Process\Process;
 
 class YoutubeDownload
 {
-    private string $url;
-    private string $outputPath;
-    private ?string $outputPathThumb;
-    private ?string $outputNameThumb;
+    private YoutubeObject $youtubeObject;
     private bool $withThumbnail = false;
 
     public function from($url): self
     {
-        $this->url = $url;
+        $this->youtubeObject = new YoutubeObject();
+        $this->youtubeObject->setUrl($url);
         return $this;
     }
 
     /**
      * Only mp3
-     * @param string $outputPath
-     * @param string|null $outputName
-     * @return string
+     * @param string $path
+     * @param string|null $name
+     * @return YoutubeObject
      */
-    public function download(string $outputPath = '', ?string $outputName = null): string
+    public function download(string $path = '', ?string $name = null): YoutubeObject
     {
-        if (!empty($outputPath)) {
-            $outputPath .= '/';
+        $youtubeObject = $this->getYoutubeObject();
+
+        if (!empty($path)) {
+            $path .= '/';
         }
 
-        if (!$outputName) {
-            $outputName = (string)Str::uuid();
+        if (!$name) {
+            $name = (string) Str::uuid();
         }
+
+        $youtubeObject->setPath($path)
+            ->setFilename($name);
 
         $process = Process::fromShellCommandline('youtube-dl \
             --audio-quality 0 \
@@ -48,12 +51,10 @@ class YoutubeDownload
             "$url"
         ');
 
-        print_r($process->getCommandLine());
-
         $process->run(null, [
-            'url' => $this->getUrl(),
-            'outputPath' => $outputPath,
-            'outputName' => $outputName,
+            'url' => $youtubeObject->getUrl(),
+            'outputPath' => $youtubeObject->getPath(),
+            'outputName' => $youtubeObject->getFilename(),
         ]);
 
         if (!$process->isSuccessful()) {
@@ -64,21 +65,23 @@ class YoutubeDownload
             $this->downloadThumnail();
         }
 
-        return $outputPath . $outputName;
+        return $youtubeObject;
     }
 
-    public function withThumbnail(string $outputPath = null, string $outputName = null): self
+    public function withThumbnail(string $path = null, string $name = null): self
     {
-        if (!empty($outputPath)) {
-            $outputPath .= '/';
+        if (!empty($path)) {
+            $path .= '/';
         }
 
-        if (!$outputName) {
-            $outputName = (string)Str::uuid();
+        if (!$name) {
+            $name = (string) Str::uuid();
         }
 
-        $this->outputNameThumb = $outputName;
-        $this->outputPathThumb = $outputPath;
+        $this->getYoutubeObject()
+            ->setThumbName($name)
+            ->setThumbPath($path);
+
         $this->withThumbnail = true;
 
         return $this;
@@ -86,19 +89,20 @@ class YoutubeDownload
 
     /**
      * Get Info by Params
-     * @param mixed ...$params
-     * @return mixed
+     * @return YoutubeMetadata
      * @throws \JsonException
      */
-    public function getInfo(...$params)
+    public function getInfo(): YoutubeMetadata
     {
+        $youtubeMetadata = new YoutubeMetadata();
+
         $process = Process::fromShellCommandline('youtube-dl \
             --print-json \
             "$url"
         ');
 
         $process->run(null, [
-            'url' => $this->getUrl(),
+            'url' => $this->getYoutubeObject()->getUrl(),
         ]);
 
         if(!$process->isSuccessful()) {
@@ -106,8 +110,17 @@ class YoutubeDownload
         }
 
         $outputProcess = json_decode($process->getOutput(), true, 512, JSON_THROW_ON_ERROR);
+        $youtubeMetadata
+            ->setTitle($outputProcess['title'])
+            ->setDuration($outputProcess['duration']);
 
-        return array_intersect_key($outputProcess, array_flip($params));
+        unset($outputProcess['title'], $outputProcess['duration']);
+
+        $youtubeMetadata->setMetadata($outputProcess);
+
+        //return array_intersect_key($outputProcess, array_flip($params));
+
+        return $youtubeMetadata;
 
     }
 
@@ -120,10 +133,12 @@ class YoutubeDownload
             "$url"
         ');
 
+        $youtubeObject = $this->getYoutubeObject();
+
         $process->run(null, [
-            'url' => $this->getUrl(),
-            'outputName' => $this->outputNameThumb,
-            'outputPath' => $this->outputPathThumb,
+            'url' => $youtubeObject->getUrl(),
+            'outputName' => $youtubeObject->getThumbName(),
+            'outputPath' => $youtubeObject->getThumbPath(),
         ]);
 
         if (!$process->isSuccessful()) {
@@ -132,19 +147,11 @@ class YoutubeDownload
     }
 
     /**
-     * @return string
+     * @return YoutubeObject
      */
-    public function getUrl(): string
+    public function getYoutubeObject(): YoutubeObject
     {
-        return $this->url;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOutputPath(): string
-    {
-        return $this->outputPath;
+        return $this->youtubeObject;
     }
 
 }
