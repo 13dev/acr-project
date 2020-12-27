@@ -1,19 +1,19 @@
 <?php
 
-namespace Database\Factories\Domain\User;
+namespace Database\Factories\Domain\Artist;
 
-use App\Domain\User\User;
+use App\Domain\Artist\Artist;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+class ArtistFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Artist::class;
 
     /**
      * Define the model's default state.

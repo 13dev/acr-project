@@ -1,6 +1,6 @@
 <template>
     <tr class="border-b border-gray-800 hover:bg-gray-700" ref="track">
-        <td class="p-2 w-10">{{ song.track }}</td>
+        <td class="p-2 w-10">{{ songtrack }}</td>
         <td class="p-2 w-10">
             <i
                 v-if="isCurrentlyPlaying()"
@@ -44,6 +44,9 @@ import {mapActions, mapGetters} from 'vuex'
 export default {
     name: 'AppTrack',
     props: {
+        songtrack: {
+            required: true,
+        },
         song: {
             required: true,
         },

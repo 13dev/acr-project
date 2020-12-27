@@ -1,17 +1,49 @@
 <?php
 
-namespace App\Domain\User;
+namespace App\Domain\Artist;
 
-use App\Core\UuidModel;
 use App\Domain\Album\Album;
 use App\Domain\Song\Song;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use GoldSpecDigital\LaravelEloquentUUID\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class Artist extends UuidModel implements Searchable
+class Artist extends Authenticatable implements Searchable
 {
-    use HasFactory;
+    use HasFactory, Notifiable, Uuid;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
     /**
      * An artist has many albums.
@@ -41,4 +73,5 @@ class Artist extends UuidModel implements Searchable
     {
         return new SearchResult($this, $this->name, '/artists/' . $this->getKey());
     }
+
 }

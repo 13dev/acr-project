@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\Http\User\Actions;
+namespace App\Http\Artist\Actions;
 
 
-use App\Domain\User\Artist;
-use App\Http\User\Resources\ArtistResource;
+use App\Domain\Artist\Artist;
+use App\Http\Artist\Resources\ArtistResource;
 
 class GetArtistAction
 {

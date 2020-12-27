@@ -4,7 +4,7 @@ namespace App\Domain\Album;
 
 use App\Core\UuidModel;
 use App\Domain\Song\Song;
-use App\Domain\User\Artist;
+use App\Domain\Artist\Artist;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -26,8 +26,7 @@ class Album extends UuidModel implements Searchable
     public function songs()
     {
         return $this->hasMany(Song::class)
-            ->orderBy('disc')
-            ->orderBy('track');
+            ->orderBy('disc');
     }
 
     public function getPlaytimeAttribute()

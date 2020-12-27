@@ -3,7 +3,7 @@
 namespace App\Http\Song\Resources;
 
 use App\Http\Album\Resources\AlbumResource;
-use App\Http\User\Resources\ArtistResource;
+use App\Http\Artist\Resources\ArtistResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SongResource extends JsonResource
@@ -13,7 +13,6 @@ class SongResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'track' => $this->track,
             'disc' => $this->disc,
             'length' => $this->length,
             'playtime' => $this->playtime,

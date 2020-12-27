@@ -18,7 +18,6 @@ class CreateSongsTable extends Migration
 
             $table->uuid('album_id');
             $table->string('title');
-            $table->integer('track');
             $table->integer('disc');
             $table->bigInteger('length')->unsigned();
             $table->integer('bitrate')->nullable();
