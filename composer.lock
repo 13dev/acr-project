@@ -2615,21 +2615,21 @@
         },
         {
             "name": "spatie/laravel-searchable",
-            "version": "1.9.0",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-searchable.git",
-                "reference": "79ea2abc11f7354d2beec537b39c455b1679d99b"
+                "reference": "a246b78d3934016885963a6ac5f6ac63a3ed7655"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-searchable/zipball/79ea2abc11f7354d2beec537b39c455b1679d99b",
-                "reference": "79ea2abc11f7354d2beec537b39c455b1679d99b",
+                "url": "https://api.github.com/repos/spatie/laravel-searchable/zipball/a246b78d3934016885963a6ac5f6ac63a3ed7655",
+                "reference": "a246b78d3934016885963a6ac5f6ac63a3ed7655",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.8.0|^6.0|^7.0|^8.0",
-                "php": "^7.2"
+                "laravel/framework": "^6.0|^7.0|^8.0",
+                "php": "^7.2|^8.0"
             },
             "require-dev": {
                 "larapack/dd": "^1.0",
@@ -2668,7 +2668,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-searchable/issues",
-                "source": "https://github.com/spatie/laravel-searchable/tree/1.9.0"
+                "source": "https://github.com/spatie/laravel-searchable/tree/1.9.1"
             },
             "funding": [
                 {
@@ -2676,7 +2676,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-12-09T07:25:27+00:00"
+            "time": "2020-12-27T21:00:03+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
