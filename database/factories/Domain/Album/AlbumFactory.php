@@ -25,16 +25,10 @@ class AlbumFactory extends Factory
      */
     public function definition()
     {
-        $imageName = Str::random(20).'.jpg';
-        file_put_contents(
-            storage_path('app/public/covers/'. $imageName),
-            file_get_contents('http://placeimg.com/640/480/people')
-        );
         return [
             'name' => $this->faker->firstName . ' ' . $this->faker->lastName,
             'year' => $this->faker->year,
             'genre' => $this->faker->word,
-            'cover' => $imageName,
             'artist_id' => Artist::factory(),
         ];
     }
