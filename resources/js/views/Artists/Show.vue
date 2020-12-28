@@ -19,7 +19,7 @@
                                  class="font-bold text-3xl text-white leading-none mb-3 focus:outline-none hover:underline">
                         {{ album.name }}
                     </router-link>
-                    <!-- <h3 class="text-sm">2008 <span class="mx-1">•</span> 10 songs <span class="mx-1">•</span> 55 min <span class="mx-1">•</span> J-Rock</h3> -->
+<!--                    <h3 class="text-sm">2008 <span class="mx-1">•</span> 10 songs <span class="mx-1">•</span> 55 min <span class="mx-1">•</span> Boris brejcha</h3>-->
                 </div>
             </div>
 

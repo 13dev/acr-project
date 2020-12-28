@@ -9,7 +9,7 @@
 
             <button
                 v-else
-                @click.prevent="setSong(song)"
+                @click.prevent="setSoundAndCount()"
             >
                 <i class="fas fa-play-circle hover:text-axiom-500 text-gray-600 focus:outline-none"></i>
             </button>
@@ -72,6 +72,15 @@ export default {
             'play',
             'isCurrentlyPlaying',
         ]),
+        setSoundAndCount() {
+            axios.get('/api/songs/played/' + this.song.id)
+                .then((response) => {
+                    if (response.status === 200) {
+                        this.setSong(this.song)
+                    }
+                })
+                .catch(console.log)
+        },
         isCurrentlyPlaying() {
             if (!this.currentSong) {
                 return false

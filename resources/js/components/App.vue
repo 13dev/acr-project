@@ -1,11 +1,11 @@
 <template>
     <div class="bg-gray-900 min-h-screen h-screen overflow-hidden font-sans flex flex-col text-gray-400">
-        <div class="flex flex-1">
+        <div class="flex flex-1" style="height: calc(100% - 80px);">
             <sidebar></sidebar>
 
-            <div class="flex-1 relative overflow-y-scroll">
+            <div class="flex-1 relative" style="height: calc(100% - 60px);">
                 <search></search>
-                <div class="p-6 flex justify-center h-full">
+                <div class="p-6 flex justify-center h-full overflow-y-scroll">
                     <div class="w-full">
                         <router-view></router-view>
                     </div>
