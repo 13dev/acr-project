@@ -72,7 +72,7 @@
             <div class="text-sm px-3 mb-8 w-full md:w-2/12" v-for="album in topAlbums" :key="album.id">
                 <router-link
                     tag="button"
-                    :to="'/album/' + album.id"
+                    :to="'/albums/' + album.id"
                     class="block h-auto w-full rounded mb-2 hover:shadow-lg border-2 border-transparent hover:border-gray-500 focus:outline-none">
 
                     <div class="rounded w-full bg-dark block" style="height: 220px;">
@@ -88,7 +88,7 @@
                 <p>
                     <router-link
                         tag="button"
-                        :to="'/artist/' + album.id"
+                        :to="'/albums/' + album.id"
                         class="text-gray-500 hover:underline font-bold leading-loose focus:outline-none"
                     >
                         {{ album.name }}

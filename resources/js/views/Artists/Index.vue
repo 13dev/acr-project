@@ -3,11 +3,11 @@
         <h1 class="font-bold text-5xl text-white leading-none mb-20">Artists</h1>
 
         <div class="flex flex-wrap -mx-3">
-            <div class="text-sm px-3 mb-8 w-full md:w-1/3" v-for="artist in artists" :key="artist.id">
+            <div class="text-sm px-3 mb-8 w-full md:w-1/4" v-for="artist in artists" :key="artist.id">
                 <router-link tag="button" :to="'/artists/' + artist.id"
                              class="block h-auto w-full rounded mb-2 hover:shadow-lg border-2 border-transparent hover:border-gray-500 focus:outline-none">
-                    <div class="rounded w-full bg-dark block" style="height: 220px;">
-                        <!-- <img v-for="album in artist.albums" :key="album.id" :src="'/' + album.cover" :alt="album.name" class="h-auto w-full rounded" style="max-width: 55px;"> -->
+                    <div class="rounded w-full bg-dark block" >
+                        <img :src="'/storage/covers/' + artist.image" :alt="artist.image" class="h-auto w-full rounded" style="height: 200px; object-fit: cover">
                     </div>
                 </router-link>
 
