@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57f07c72c52af05d693394f77c6e83c0",
+    "content-hash": "099174c0639fbf84d9d8271078ef519e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4974,6 +4974,59 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.3"
             },
             "time": "2020-07-13T06:12:54+00:00"
+        },
+        {
+            "name": "titasgailius/terminal",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TitasGailius/terminal.git",
+                "reference": "9adcce078e52ac93027a22a269e4c2051a093af0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TitasGailius/terminal/zipball/9adcce078e52ac93027a22a269e4c2051a093af0",
+                "reference": "9adcce078e52ac93027a22a269e4c2051a093af0",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/process": "^4.4.2|^5.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3",
+                "phpunit/phpunit": "^9.0",
+                "symfony/var-dumper": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TitasGailius\\Terminal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Titas Gailius",
+                    "email": "titas.gailius@gmail.com"
+                }
+            ],
+            "description": "Terminal is an Elegent wrapper around Symfony's Process component.",
+            "keywords": [
+                "bash",
+                "exec",
+                "laravel",
+                "process",
+                "symfony",
+                "terminal"
+            ],
+            "support": {
+                "issues": "https://github.com/TitasGailius/terminal/issues",
+                "source": "https://github.com/TitasGailius/terminal"
+            },
+            "time": "2020-11-24T15:34:03+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

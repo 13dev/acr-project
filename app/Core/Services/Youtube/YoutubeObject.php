@@ -6,7 +6,7 @@ namespace App\Core\Services\Youtube;
 
 class YoutubeObject
 {
-    private string $path;
+    private string $path = '';
     private string $filename;
     private string $fileExt = '.mp3';
     private string $url;

@@ -4,14 +4,13 @@
 namespace App\Core\Services\Youtube;
 
 use Illuminate\Support\Str;
-use Storage;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
+use TitasGailius\Terminal\Terminal;
 
 class YoutubeDownload
 {
     private YoutubeObject $youtubeObject;
-    private bool $withThumbnail = false;
 
     public function from($url): self
     {
@@ -24,66 +23,96 @@ class YoutubeDownload
      * Only mp3
      * @param string $path
      * @param string|null $name
+     * @param callable|null $outputCallback
      * @return YoutubeObject
+     * @throws \JsonException
      */
-    public function download(string $path = '', ?string $name = null): YoutubeObject
+    public function download(string $path = '', ?string $name = null, callable $outputCallback = null): YoutubeObject
     {
-        $youtubeObject = $this->getYoutubeObject();
-
         if (!empty($path)) {
             $path .= '/';
         }
 
         if (!$name) {
-            $name = (string) Str::uuid();
+            $name = (string)Str::uuid();
         }
 
-        $youtubeObject->setPath($path)
+        $youtubeObject = $this->getYoutubeObject()
+            ->setPath($path)
             ->setFilename($name);
 
-        $process = Process::fromShellCommandline('youtube-dl \
-            --audio-quality 0 \
-            --audio-format mp3 \
-            --continue \
-            --no-overwrites \
-            --ignore-errors \
-            --extract-audio \
-            --output "$outputPath$outputName.%(ext)s" \
-            "$url"
-        ');
+        $output = function ($type, $line) use ($outputCallback) {
 
-        $process->run(null, [
-            'url' => $youtubeObject->getUrl(),
-            'outputPath' => $youtubeObject->getPath(),
-            'outputName' => $youtubeObject->getFilename(),
-        ]);
+            if ($type === Process::ERR) {
+                return;
+            }
 
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
+            if (($progressBar = json_decode($line)) === null) {
+                return;
+            }
 
-        if ($this->withThumbnail) {
-            $this->downloadThumbnail();
-        }
+            if (isset($progressBar->progress) && json_last_error() === JSON_ERROR_NONE) {
 
-        return $youtubeObject;
+                if ($outputCallback === null) {
+                    print "Downloading [{$progressBar->videoId}] - ";
+                    print number_format($progressBar->progress->percentage, 2) . "%" . PHP_EOL;
+                    return;
+                }
+
+                if (is_callable($outputCallback)) {
+                    $outputCallback($progressBar);
+                }
+            }
+
+            // Done!
+            if (isset($progressBar->stats)) {
+                $this->downloadThumbnail($progressBar->thumbnail);
+            }
+        };
+
+        Terminal::output($output)
+            ->with([
+                'url' => $youtubeObject->getUrl(),
+                'options' => $this->buildDownloaderOptions($path, $name),
+            ])
+            ->run('node downloader.js \
+                --options="{{ $options }}" \
+                --url="{{ $url }}"
+            ');
+
+        // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}
+
+        return $youtubeObject
+            ->setPath($path)
+            ->setFilename($name);
     }
 
-    public function withThumbnail(string $path = null, string $name = null): self
+
+    public function buildDownloaderOptions($path, $name): string
     {
-        if (!empty($path)) {
-            $path .= '/';
-        }
+        $data = [
+            'ffmpegPath' => '/usr/bin/ffmpeg',
+            'youtubeVideoQuality' => 'highestaudio',
+            'queueParallelism' => 1,
+            'progressTimeout' => 0,
+            'allowWebm' => false,
+            'outputPath' => $path,
+            'outputName' => $name,
+        ];
 
-        if (!$name) {
-            $name = (string) Str::uuid();
-        }
-
+        $javaScriptOptions = json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+        return addslashes($javaScriptOptions);
+    }
+    /**
+     * @param string $path
+     * @param string $name
+     * @return $this
+     */
+    public function thumbnail(string $path, string $name)
+    {
         $this->getYoutubeObject()
-            ->setThumbName($name)
-            ->setThumbPath($path);
-
-        $this->withThumbnail = true;
+            ->setThumbPath($path)
+            ->setThumbName($name);
 
         return $this;
     }
@@ -102,11 +131,15 @@ class YoutubeDownload
             "$url"
         ');
 
-        $process->run(null, [
-            'url' => $this->getYoutubeObject()->getUrl(),
-        ]);
+        $process
+            ->setTimeout(null)
+            ->setEnv([
+                'url' => $this->getYoutubeObject()->getUrl(),
+            ])
+            ->mustRun()
+            ->wait();
 
-        if(!$process->isSuccessful()) {
+        if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
 
@@ -125,27 +158,14 @@ class YoutubeDownload
 
     }
 
-    private function downloadThumbnail(): void
+    private function downloadThumbnail(string $url): string
     {
         $youtubeObject = $this->getYoutubeObject();
-        $process = Process::fromShellCommandline('youtube-dl \
-            --skip-download \
-            --get-id \
-            "$url"
-        ');
 
-        $process->run(null, [
-            'url' => $youtubeObject->getUrl(),
-        ]);
+        $content = file_get_contents($url);
+        file_put_contents($youtubeObject->getThumbnailLocation(), $content);
 
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        $thumbnail = file_get_contents('https://i1.ytimg.com/vi/'.trim($process->getOutput()).'/hqdefault.jpg');
-
-        file_put_contents($youtubeObject->getThumbnailLocation(), $thumbnail);
-
+        return $youtubeObject->getThumbnailLocation();
     }
 
     /**

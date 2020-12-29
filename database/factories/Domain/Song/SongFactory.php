@@ -55,7 +55,7 @@ class SongFactory extends Factory
             ->getInfo();
 
         $music = YoutubeDownload::from($randomMusic)
-            ->withThumbnail(storage_path('app/public/covers'))
+            ->thumbnail()
             ->download(storage_path('app'));
 
         return [
