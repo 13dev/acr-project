@@ -47,26 +47,27 @@ class YoutubeDownload
                 return;
             }
 
-            if (($progressBar = json_decode($line)) === null) {
+            if (($parsedLine = json_decode($line)) === null) {
                 return;
             }
 
-            if (isset($progressBar->progress) && json_last_error() === JSON_ERROR_NONE) {
+            if (isset($parsedLine->progress) && json_last_error() === JSON_ERROR_NONE) {
 
                 if ($outputCallback === null) {
-                    print "Downloading [{$progressBar->videoId}] - ";
-                    print number_format($progressBar->progress->percentage, 2) . "%" . PHP_EOL;
+                    print sprintf("Downloading [%s] - ", $parsedLine->videoId);
+                    print number_format($parsedLine->progress->percentage, 2) . "%" . PHP_EOL;
                     return;
                 }
 
                 if (is_callable($outputCallback)) {
-                    $outputCallback($progressBar);
+                    $outputCallback($parsedLine);
                 }
             }
 
             // Done!
-            if (isset($progressBar->stats)) {
-                $this->downloadThumbnail($progressBar->thumbnail);
+            if (isset($parsedLine->stats)) {
+                // Str::replaceFirst('hqdefault', 'maxresdefault', $parsedLine->thumbnail);
+                $this->downloadThumbnail($parsedLine->thumbnail);
             }
         };
 
@@ -87,8 +88,13 @@ class YoutubeDownload
             ->setFilename($name);
     }
 
-
-    public function buildDownloaderOptions($path, $name): string
+    /**
+     * @param $path
+     * @param $name
+     * @return string
+     * @throws \JsonException
+     */
+    private function buildDownloaderOptions($path, $name): string
     {
         $data = [
             'ffmpegPath' => '/usr/bin/ffmpeg',
@@ -103,6 +109,7 @@ class YoutubeDownload
         $javaScriptOptions = json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
         return addslashes($javaScriptOptions);
     }
+
     /**
      * @param string $path
      * @param string $name
