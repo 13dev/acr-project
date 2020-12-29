@@ -3,9 +3,12 @@
 namespace Database\Factories\Domain\Song;
 
 use App\Core\Services\Youtube\Facades\YoutubeDownload;
+use App\Core\Services\Youtube\YoutubeMetadata;
+use App\Core\Services\Youtube\YoutubeObject;
 use App\Domain\Album\Album;
 use App\Domain\Song\Song;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class SongFactory extends Factory
 {
@@ -36,12 +39,25 @@ class SongFactory extends Factory
         'https://www.youtube.com/watch?v=lurrMwQ2kGc',
     ];
 
+    protected YoutubeMetadata $musicDetails;
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
     protected $model = Song::class;
+
+    private function downloadAudio(): YoutubeObject
+    {
+        $randomMusic = $this->musics[array_rand($this->musics)];
+
+        $this->musicDetails = YoutubeDownload::from($randomMusic)
+            ->getInfo();
+
+        return YoutubeDownload::from($this->argument('url'))
+            ->thumbnail(storage_path('app/public/covers'), Str::random())
+            ->download(storage_path('app'), Str::random());
+    }
 
     /**
      * Define the model's default state.
@@ -50,18 +66,12 @@ class SongFactory extends Factory
      */
     public function definition()
     {
-        $randomMusic = $this->musics[array_rand($this->musics)];
-        $musicDetails = YoutubeDownload::from($randomMusic)
-            ->getInfo();
-
-        $music = YoutubeDownload::from($randomMusic)
-            ->withThumbnail(storage_path('app/public/covers'))
-            ->download(storage_path('app'));
+        $music = $this->downloadAudio();
 
         return [
-            'title' => $musicDetails->getTitle(),
+            'title' => $this->musicDetails->getTitle(),
             'disc' => $this->faker->boolean,
-            'length' => $musicDetails->getDuration(),
+            'length' => $this->musicDetails->getDuration(),
             'path' => $music->getFileWithExtension(),
             'mtime' => $this->faker->numberBetween(0, 10),
             'album_id' => Album::factory()->state([

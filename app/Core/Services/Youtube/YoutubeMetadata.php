@@ -33,6 +33,7 @@ class YoutubeMetadata
      */
     public function getDuration(): int
     {
+        // ffprobe -i <file> -show_entries format=duration -v quiet -of csv="p=0"
         return $this->duration;
     }
 
