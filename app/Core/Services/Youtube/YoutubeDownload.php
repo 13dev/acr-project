@@ -3,19 +3,33 @@
 
 namespace App\Core\Services\Youtube;
 
+use DateInterval;
 use Illuminate\Support\Str;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use TitasGailius\Terminal\Terminal;
+use Youtube;
 
 class YoutubeDownload
 {
     private YoutubeObject $youtubeObject;
+    private YoutubeMetadata $youtubeMetadata;
 
+    /**
+     * @param $url
+     * @return $this
+     * @throws \Exception
+     */
     public function from($url): self
     {
         $this->youtubeObject = new YoutubeObject();
-        $this->youtubeObject->setUrl($url);
+        $this->youtubeMetadata = new YoutubeMetadata();
+
+        $id = Youtube::parseVidFromURL($url);
+        $info = Youtube::getVideoInfo($id);
+        $this->youtubeMetadata
+            ->setId($id)
+            ->setTitle($info->snippet->title)
+            ->setDuration($this->ISO8601ToSeconds($info->contentDetails->duration));
         return $this;
     }
 
@@ -42,6 +56,7 @@ class YoutubeDownload
             ->setFilename($name);
 
         $output = function ($type, $line) use ($outputCallback) {
+            print $line;
 
             if ($type === Process::ERR) {
                 return;
@@ -73,12 +88,12 @@ class YoutubeDownload
 
         Terminal::output($output)
             ->with([
-                'url' => $youtubeObject->getUrl(),
+                'id' => $this->getInfo()->getId(),
                 'options' => $this->buildDownloaderOptions($path, $name),
             ])
             ->run('node downloader.js \
                 --options="{{ $options }}" \
-                --url="{{ $url }}"
+                --id="{{ $url }}"
             ');
 
         // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}
@@ -124,45 +139,22 @@ class YoutubeDownload
         return $this;
     }
 
+
     /**
-     * Get Info by Params
-     * @return YoutubeMetadata
-     * @throws \JsonException
+     * Convert ISO 8601 values like P2DT15M33S
+     * to a total value of seconds.
+     *
+     * @param string $ISO8601
+     * @throws \Exception
      */
-    public function getInfo(): YoutubeMetadata
+    private function ISO8601ToSeconds($ISO8601)
     {
-        $youtubeMetadata = new YoutubeMetadata();
+        $interval = new DateInterval($ISO8601);
 
-        $process = Process::fromShellCommandline('youtube-dl \
-            --print-json \
-            "$url"
-        ');
-
-        $process
-            ->setTimeout(null)
-            ->setEnv([
-                'url' => $this->getYoutubeObject()->getUrl(),
-            ])
-            ->mustRun()
-            ->wait();
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        $outputProcess = json_decode($process->getOutput(), true, 512, JSON_THROW_ON_ERROR);
-        $youtubeMetadata
-            ->setTitle($outputProcess['title'])
-            ->setDuration($outputProcess['duration']);
-
-        unset($outputProcess['title'], $outputProcess['duration']);
-
-        $youtubeMetadata->setMetadata($outputProcess);
-
-        //return array_intersect_key($outputProcess, array_flip($params));
-
-        return $youtubeMetadata;
-
+        return ($interval->d * 24 * 60 * 60) +
+            ($interval->h * 60 * 60) +
+            ($interval->i * 60) +
+            $interval->s;
     }
 
     private function downloadThumbnail(string $url): string
@@ -181,6 +173,14 @@ class YoutubeDownload
     public function getYoutubeObject(): YoutubeObject
     {
         return $this->youtubeObject;
+    }
+
+    /**
+     * @return YoutubeMetadata
+     */
+    public function getInfo(): YoutubeMetadata
+    {
+        return $this->youtubeMetadata;
     }
 
 }
