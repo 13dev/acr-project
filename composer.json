@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.4",
         "ext-json": "*",
+        "alaouy/youtube": "^2.2",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "goldspecdigital/laravel-eloquent-uuid": "^8.0",

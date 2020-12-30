@@ -6,10 +6,9 @@ namespace App\Core\Services\Youtube;
 
 class YoutubeObject
 {
-    private string $path = '';
+    private string $path;
     private string $filename;
     private string $fileExt = '.mp3';
-    private string $url;
 
     private string $thumbPath;
     private string $thumbName;
@@ -157,24 +156,6 @@ class YoutubeObject
     public function setThumbExt(string $thumbExt): YoutubeObject
     {
         $this->thumbExt = $thumbExt;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl(): string
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param string $url
-     * @return YoutubeObject
-     */
-    public function setUrl(string $url): YoutubeObject
-    {
-        $this->url = $url;
         return $this;
     }
 

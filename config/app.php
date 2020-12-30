@@ -177,6 +177,7 @@ return [
         App\Core\Providers\TelescopeServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Core\Providers\DigitalOceanSpacesServiceProvider::class,
+        Alaouy\Youtube\YoutubeServiceProvider::class,
     ],
 
     /*
@@ -229,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'YoutubeDownload' => App\Core\Services\Youtube\Facades\YoutubeDownload::class,
+        'Youtube' => Alaouy\Youtube\Facades\Youtube::class,
     ],
 
 ];

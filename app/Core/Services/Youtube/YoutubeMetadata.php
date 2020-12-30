@@ -6,6 +6,7 @@ namespace App\Core\Services\Youtube;
 
 class YoutubeMetadata
 {
+    private string $id;
     private string $title;
     private int $duration;
     private array $metadata;
@@ -64,5 +65,24 @@ class YoutubeMetadata
         $this->metadata = $metadata;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     * @return YoutubeMetadata
+     */
+    public function setId(string $id): YoutubeMetadata
+    {
+        $this->id = $id;
+        return $this;
+    }
+
 
 }
