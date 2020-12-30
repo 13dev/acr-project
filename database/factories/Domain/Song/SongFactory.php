@@ -50,14 +50,12 @@ class SongFactory extends Factory
     private function downloadAudio(): YoutubeObject
     {
         $randomMusic = $this->musics[array_rand($this->musics)];
-
-        dump($randomMusic);
         $this->musicDetails = YoutubeDownload::from($randomMusic)
             ->getYoutubeMetadata();
 
         return YoutubeDownload::from($randomMusic)
             ->thumbnail(storage_path('app/public/covers'), Str::random())
-            ->download(storage_path('app'), Str::random());
+            ->download(storage_path('app/musics'), Str::random());
     }
 
     /**

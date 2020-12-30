@@ -4,6 +4,7 @@
 namespace App\Core\Services\Youtube;
 
 use DateInterval;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -150,8 +151,8 @@ class YoutubeDownload
     {
         $youtubeObject = $this->getYoutubeObject();
 
-        $content = file_get_contents($url);
-        file_put_contents($youtubeObject->getThumbnailLocation(), $content);
+        File::ensureDirectoryExists($youtubeObject->getPath());
+        File::put($youtubeObject->getThumbnailLocation(), file_get_contents($url));
 
         return $youtubeObject->getThumbnailLocation();
     }
