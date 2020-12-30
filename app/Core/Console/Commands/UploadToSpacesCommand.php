@@ -2,6 +2,8 @@
 
 namespace App\Core\Console\Commands;
 
+use App\Core\Jobs\StorageSongJob;
+use Artisan;
 use Aws\S3\Transfer;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -40,30 +42,15 @@ class UploadToSpacesCommand extends Command
      */
     public function handle()
     {
-        ini_set('memory_limit', '200M');
-        set_time_limit(0);
+        $folder = $this->argument('folder');
 
-        $folder =  $this->argument('folder');
-
-        $disk = Storage::disk('spaces');
-        $files = Storage::allFiles($folder);
-
-        $bar = $this->getOutput()->createProgressBar(count($files));
-
-        $bar->start();
         $this->newLine();
 
-        foreach ($files as $file) {
-            $this->info(sprintf('Uploading [%s] to Digital Ocean...', $file));
-            $this->newLine();
-
-            $disk->put($file, file_get_contents(storage_path('app/'. $file)));
-
-            $bar->advance();
-            $this->newLine();
+        foreach (Storage::allFiles($folder) as $file) {
+            $this->info(sprintf('Uploading "%s" to Digital Ocean...', $file));
+            dispatch(new StorageSongJob($file));
         }
 
-        $bar->finish();
         $this->newLine();
         $this->comment('Done.');
         return 0;
