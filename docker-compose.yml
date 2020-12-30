@@ -10,7 +10,6 @@ services:
         PHP_VERSION: ${PHP_VERSION}
         REMOTE_WORKING_DIR: ${REMOTE_WORKING_DIR}
     container_name: app
-    image: 13dev/laravel7.4
     restart: unless-stopped
     volumes:
       - ${LOCAL_WORKING_DIR}:${REMOTE_WORKING_DIR}
@@ -27,6 +26,8 @@ services:
       - ${LOCAL_WORKING_DIR}:${REMOTE_WORKING_DIR}
     depends_on:
       - database
+    networks:
+      - app-network
   nginx:
     image: nginx:alpine
     container_name: nginx
