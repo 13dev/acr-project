@@ -25,6 +25,7 @@ class YoutubeDownload
         $this->youtubeMetadata = new YoutubeMetadata();
 
         $id = Youtube::parseVidFromURL($url);
+
         $info = Youtube::getVideoInfo($id);
         $this->youtubeMetadata
             ->setId($id)
@@ -56,7 +57,6 @@ class YoutubeDownload
             ->setFilename($name);
 
         $output = function ($type, $line) use ($outputCallback) {
-            print $line;
 
             if ($type === Process::ERR) {
                 return;
@@ -93,7 +93,7 @@ class YoutubeDownload
             ])
             ->run('node downloader.js \
                 --options="{{ $options }}" \
-                --id="{{ $url }}"
+                --id="{{ $id }}" \
             ');
 
         // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}

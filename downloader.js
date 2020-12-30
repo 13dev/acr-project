@@ -14,7 +14,7 @@ let options = JSON.parse(argv.options.replace(/'/g, ''))
 const downloader = new YoutubeMp3Downloader(options)
 
 //Download video and save as MP3 file
-downloader.download(argv.id, options.outputName + '.mp3')
+downloader.download(argv.id.replace(/'/g, ''), options.outputName + '.mp3')
 
 downloader.on('progress', progress => {
     console.log(JSON.stringify(progress))
