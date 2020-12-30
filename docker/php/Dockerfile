@@ -79,6 +79,10 @@ RUN apk add shadow && usermod -u 1000 www-data && groupmod -g 1000 www-data
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . $REMOTE_WORKING_DIR
 
+## create entry point
+#COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+#RUN chmod +x /usr/local/bin/docker-entrypoint
+
 # Change current user to www
 USER www-data
 
@@ -87,3 +91,5 @@ EXPOSE 9000
 
 # Run php-fpm
 CMD ["php-fpm"]
+
+#CMD ["/usr/local/bin/docker-entrypoint"]
