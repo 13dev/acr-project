@@ -5,6 +5,7 @@ namespace App\Core\Services\Youtube;
 
 use DateInterval;
 use Illuminate\Support\Str;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use TitasGailius\Terminal\Terminal;
 use Youtube;
@@ -22,15 +23,8 @@ class YoutubeDownload
     public function from($url): self
     {
         $this->youtubeObject = new YoutubeObject();
-        $this->youtubeMetadata = new YoutubeMetadata();
+        $this->youtubeMetadata = $this->buildMetadata($url);
 
-        $id = Youtube::parseVidFromURL($url);
-
-        $info = Youtube::getVideoInfo($id);
-        $this->youtubeMetadata
-            ->setId($id)
-            ->setTitle($info->snippet->title)
-            ->setDuration($this->ISO8601ToSeconds($info->contentDetails->duration));
         return $this;
     }
 
@@ -56,7 +50,31 @@ class YoutubeDownload
             ->setPath($path)
             ->setFilename($name);
 
-        $output = function ($type, $line) use ($outputCallback) {
+        Terminal::output($this->parseOutputDownload($outputCallback))
+            ->with([
+                'id' => $this->youtubeMetadata->getId(),
+                'options' => $this->buildDownloaderOptions($path, $name),
+            ])
+            ->run('node downloader.js \
+                --options="{{ $options }}" \
+                --id="{{ $id }}" \
+            ');
+
+        // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}
+
+        return $youtubeObject
+            ->setPath($path)
+            ->setFilename($name);
+    }
+
+    /**
+     * Parse the lines on download function
+     * @param $outputCallback
+     * @return \Closure
+     */
+    private function parseOutputDownload($outputCallback)
+    {
+        return function ($type, $line) use ($outputCallback) {
 
             if ($type === Process::ERR) {
                 return;
@@ -85,22 +103,6 @@ class YoutubeDownload
                 $this->downloadThumbnail($parsedLine->thumbnail);
             }
         };
-
-        Terminal::output($output)
-            ->with([
-                'id' => $this->getInfo()->getId(),
-                'options' => $this->buildDownloaderOptions($path, $name),
-            ])
-            ->run('node downloader.js \
-                --options="{{ $options }}" \
-                --id="{{ $id }}" \
-            ');
-
-        // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}
-
-        return $youtubeObject
-            ->setPath($path)
-            ->setFilename($name);
     }
 
     /**
@@ -139,24 +141,11 @@ class YoutubeDownload
         return $this;
     }
 
-
     /**
-     * Convert ISO 8601 values like P2DT15M33S
-     * to a total value of seconds.
-     *
-     * @param string $ISO8601
-     * @throws \Exception
+     * Download thumnail
+     * @param string $url
+     * @return string
      */
-    private function ISO8601ToSeconds($ISO8601)
-    {
-        $interval = new DateInterval($ISO8601);
-
-        return ($interval->d * 24 * 60 * 60) +
-            ($interval->h * 60 * 60) +
-            ($interval->i * 60) +
-            $interval->s;
-    }
-
     private function downloadThumbnail(string $url): string
     {
         $youtubeObject = $this->getYoutubeObject();
@@ -176,9 +165,38 @@ class YoutubeDownload
     }
 
     /**
+     * Build metadata Object
+     * @param string $url
+     * @throws \JsonException
+     */
+    private function buildMetadata(string $url)
+    {
+        $info = $this->getVideoInformation($url);
+
+        return (new YoutubeMetadata())
+            ->setTitle($info->title ?? '')
+            ->setDuration($info->duration ?? '')
+            ->setId($info->id ?? '');
+    }
+
+    /**
+     * Runs a process and retrive video Info
+     * @param string $url
+     * @return object
+     * @throws \JsonException
+     */
+    private function getVideoInformation(string $url): object
+    {
+        $response = Terminal::run('youtube-dl --dump-json --skip-download ' . $url);
+        $response->throw();
+
+        return json_decode($response->output(), false, 512, JSON_THROW_ON_ERROR);
+    }
+
+    /**
      * @return YoutubeMetadata
      */
-    public function getInfo(): YoutubeMetadata
+    public function getYoutubeMetadata(): YoutubeMetadata
     {
         return $this->youtubeMetadata;
     }
