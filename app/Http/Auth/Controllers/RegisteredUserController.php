@@ -6,6 +6,7 @@ use App\Core\Controller;
 use App\Core\Providers\RouteServiceProvider;
 use App\Domain\Artist\Artist;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +27,7 @@ class RegisteredUserController extends Controller
      * Handle an incoming registration request.
      *
      * @param  \App\Http\Core\Requests\LoginRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -34,7 +35,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:artists',
             'password' => 'required|string|confirmed|min:8',
         ]);
 
