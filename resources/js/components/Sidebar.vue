@@ -4,7 +4,7 @@
             <ul class="sidebar__nav">
                 <li class="sidebar__item">
                     <router-link tag="button" exact to="/" class="sidebar__link mt-8">
-                        Browse
+                        <i class="fas fa-newspaper text-axiom-500"></i> Browse
                     </router-link>
                 </li>
             </ul>
@@ -15,28 +15,23 @@
                 </li>
                 <li class="sidebar__item">
                     <router-link tag="button" to="/recently-added" class="sidebar__link">
-                        Recently Added
+                        <i class="fas fa-plus text-axiom-500"></i> Recently Added
                     </router-link>
                 </li>
 
                 <li class="sidebar__item">
                     <router-link tag="button" to="/artists" class="sidebar__link">
-                        Artists
+                        <i class="fas fa-users text-axiom-500"></i> Artists
                     </router-link>
                 </li>
 
                 <li class="sidebar__item">
                     <router-link tag="button" to="/albums" class="sidebar__link">
-                        Albums
+                        <i class="fas fa-compact-disc"></i> Albums
                     </router-link>
                 </li>
             </ul>
 
-            <ul class="mt-8">
-                <li class="sidebar__label">
-                    Playlists
-                </li>
-            </ul>
         </div>
         <cover></cover>
     </div>
