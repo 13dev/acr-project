@@ -9,6 +9,7 @@ use Illuminate\Http\File;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\File as FileFacade;
+use Illuminate\Support\Str;
 use Storage;
 
 class StorageSongJob implements ShouldQueue
@@ -34,15 +35,15 @@ class StorageSongJob implements ShouldQueue
      */
     public function handle()
     {
-        $filePath = storage_path('app/' . $this->file);
+        $file = new File(storage_path('app/' . $this->file));
+        $fileHandler = fopen($file->getPathname(), 'rb+');
 
-        $fileHandler = fopen($filePath, 'rb+');
-        if (Storage::disk('spaces')->putFile($this->file, new File($filePath), $fileHandler)) {
-            //        flock($fileHandler,  LOCK_EX | LOCK_NB);
-            //        ftruncate($fileHandler, 0);
-            //        fclose($fileHandler);
+        //Remove the filename from the path
+        $storagePath = Str::replaceFirst($file->getFilename(), '', $this->file);
+
+        if (Storage::disk('spaces')->putFileAs($storagePath, $file, $file->getFilename(), $fileHandler)) {
             fclose($fileHandler);
-            FileFacade::delete($filePath);
+            FileFacade::delete($file->getPathname());
         }
     }
 

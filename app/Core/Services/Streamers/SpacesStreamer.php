@@ -3,18 +3,17 @@
 
 namespace App\Core\Services\Streamers;
 
+use Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class LaravelStreamer extends Streamer
+class SpacesStreamer extends Streamer
 {
-
     public function stream(): Response
     {
         BinaryFileResponse::trustXSendfileTypeHeader();
 
-        return new BinaryFileResponse(
-            config('songs.path') . $this->song->path
-        );
+        return Storage::disk('spaces')
+            ->download(config('songs.spaces_path') . $this->song->path);
     }
 }

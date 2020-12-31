@@ -3,8 +3,8 @@
 
 namespace App\Core\Services\Youtube;
 
+use Closure;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 use TitasGailius\Terminal\Terminal;
 
@@ -28,46 +28,34 @@ class YoutubeDownload
 
     /**
      * Only mp3
-     * @param string $path
+     * @param string|null $path
      * @param string|null $name
      * @param callable|null $outputCallback
      * @return YoutubeObject
      * @throws \JsonException
      */
-    public function download(string $path = '', ?string $name = null, callable $outputCallback = null): YoutubeObject
+    public function download(?string $path = null, ?string $name = null, callable $outputCallback = null): YoutubeObject
     {
-        if (!empty($path)) {
-            $path .= '/';
-        }
-
-        if (!$name) {
-            $name = (string)Str::uuid();
-        }
-
         $youtubeObject = $this->getYoutubeObject()
             ->setPath($path)
             ->setFilename($name);
 
-        Terminal::output($this->parseOutputDownload($outputCallback))
-            ->with([
-                'id' => $this->youtubeMetadata->getId(),
-                'options' => $this->buildDownloaderOptions($path, $name),
-            ])
-            ->run('node downloader.js --options="{{ $options }}" --id="{{ $id }}"');
+        // Run command and pass closure to output method.
+        Terminal::output($this->parseOutputDownload($outputCallback))->with([
+            'id' => $this->getYoutubeMetadata()->getId(),
+            'options' => $this->buildDownloaderOptions(),
+        ])->run('node downloader.js --options="{{ $options }}" --id="{{ $id }}"');
 
         // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}
-
-        return $youtubeObject
-            ->setPath($path)
-            ->setFilename($name);
+        return $youtubeObject;
     }
 
     /**
      * Parse the lines on download function
      * @param $outputCallback
-     * @return \Closure
+     * @return Closure
      */
-    private function parseOutputDownload($outputCallback)
+    private function parseOutputDownload($outputCallback): Closure
     {
         return function ($type, $line) use ($outputCallback) {
 
@@ -101,12 +89,10 @@ class YoutubeDownload
     }
 
     /**
-     * @param $path
-     * @param $name
      * @return string
      * @throws \JsonException
      */
-    private function buildDownloaderOptions($path, $name): string
+    private function buildDownloaderOptions(): string
     {
         $data = [
             'ffmpegPath' => '/usr/bin/ffmpeg',
@@ -114,12 +100,11 @@ class YoutubeDownload
             'queueParallelism' => 1,
             'progressTimeout' => 0,
             'allowWebm' => false,
-            'outputPath' => $path,
-            'outputName' => $name,
+            'outputPath' => $this->getYoutubeObject()->getPath(),
+            'outputName' => $this->getYoutubeObject()->getFilename(),
         ];
 
-        $javaScriptOptions = json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
-        return addslashes($javaScriptOptions);
+        return addslashes(json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES));
     }
 
     /**

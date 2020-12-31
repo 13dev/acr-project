@@ -3,10 +3,9 @@
 
 namespace App\Core\Services\Streamers;
 
-
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 interface Streamable
 {
-    public function stream(): ?BinaryFileResponse;
+    public function stream(): Response;
 }

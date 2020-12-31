@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Providers\RouteServiceProvider;
+use App\Core\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

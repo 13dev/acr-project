@@ -4,6 +4,8 @@
 namespace App\Core\Services\Youtube;
 
 
+use Illuminate\Support\Str;
+
 class YoutubeObject
 {
     private string $path;
@@ -60,12 +62,17 @@ class YoutubeObject
     }
 
     /**
-     * @param string $path
+     * @param string|null $path
      * @return YoutubeObject
      */
-    public function setPath(string $path): YoutubeObject
+    public function setPath(?string $path = null): YoutubeObject
     {
-        $this->path = $path;
+        $path = $path ?: '/';
+
+        if(!Str::endsWith('/', $path)) {
+            $this->path = $path . '/';
+        }
+
         return $this;
     }
 
@@ -81,9 +88,9 @@ class YoutubeObject
      * @param string $filename
      * @return YoutubeObject
      */
-    public function setFilename(string $filename): YoutubeObject
+    public function setFilename(?string $filename = null): YoutubeObject
     {
-        $this->filename = $filename;
+        $this->filename = $filename ?: (string) Str::uuid();
         return $this;
     }
 
