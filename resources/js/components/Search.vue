@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center sticky pin-t py-3 px-6 w-full bg-gray-900 fixed top-0 shadow-md">
+    <div class="flex items-center sticky pin-t py-3 px-6 w-full bg-gray-900 fixed top-0 shadow-md my-auto">
         <div class="flex">
             <div class="flex items-center mr-6">
                 <button @click.prevent="$router.go(-1)" class="mr-6 text-gray-200 no-underline hover:text-white focus:outline-none">
@@ -12,13 +12,13 @@
             </div>
 
             <div @blur="blur" @keydown.esc.prevent="blur">
-                <div class="bg-white rounded-full px-2 flex items-center overflow-hidden">
+                <div class="bg-white rounded-full px-2 flex items-center overflow-hidden max-w-md w-full" style="width: 300px">
                     <i class="fas fa-search mr-2" :class="{
                         'text-axiom-500': focused,
                         'text-gray-500': !focused,
                     }"></i>
 
-                    <input type="text" id="search" ref="search" class="py-1 text-sm outline-none" :class="{
+                    <input type="text" id="search" ref="search" class="py-1 text-sm outline-none w-full" :class="{
                         'text-gray-600': focused,
                         'text-gray-500': !focused,
                     }" placeholder="Search" v-model="query" @focus="focus">
@@ -37,13 +37,27 @@
                     </div>
 
                     <div v-if="results.length === 0 && query" class="text-xs text-black">
-                        <p>Nothing found :(</p>
+                        <p>Nothing found.</p>
                     </div>
 
                     <div v-if="!query" class="text-xs text-black">
-                        <p>Looking for something?</p>
+                        <p>Search for albums, artists and songs!</p>
                     </div>
                 </div>
+            </div>
+
+        </div>
+        <div class="flex justify-end w-full">
+            <div>
+                <button class="px-8 py-1 mr-2 rounded-full bg-green-300 text-green-600 max-w-max shadow-sm hover:shadow-md">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </div>
+            <div>
+                <button class="px-8 py-1 rounded-full border border-green-600 text-green-600 max-w-max shadow-sm hover:shadow-md">
+                    <i class="fas fa-user-plus"></i>
+                    Sign Up
+                </button>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 <template>
     <div class="sidebar" style="width: 200px">
         <div class="sidebar__container">
+            <img src="/images/logo.png" alt="Logo" class="px-4 pt-4">
             <ul class="sidebar__nav">
                 <li class="sidebar__item">
                     <router-link tag="button" exact to="/" class="sidebar__link mt-8">
@@ -9,7 +10,7 @@
                 </li>
             </ul>
 
-            <ul class="sidebar__nav mt-8">
+            <ul class="sidebar__nav mt-5">
                 <li class="sidebar__label">
                     Your Library
                 </li>
