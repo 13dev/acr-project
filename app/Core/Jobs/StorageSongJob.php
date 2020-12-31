@@ -3,20 +3,19 @@
 namespace App\Core\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Http\File;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File as FileFacade;
 use Storage;
 
 class StorageSongJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private string $file;
+    public string $file;
 
     /**
      * Create a new job instance.
@@ -35,9 +34,16 @@ class StorageSongJob implements ShouldQueue
      */
     public function handle()
     {
-        $file = new File(storage_path('app/' . $this->file));
+        $filePath = storage_path('app/' . $this->file);
 
-        Storage::disk('spaces')
-            ->putFile($file->getPathname(), $file);
+        $fileHandler = fopen($filePath, 'rb+');
+        if (Storage::disk('spaces')->putFile($this->file, new File($filePath), $fileHandler)) {
+            //        flock($fileHandler,  LOCK_EX | LOCK_NB);
+            //        ftruncate($fileHandler, 0);
+            //        fclose($fileHandler);
+            fclose($fileHandler);
+            FileFacade::delete($filePath);
+        }
     }
+
 }

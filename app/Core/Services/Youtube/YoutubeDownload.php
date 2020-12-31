@@ -3,13 +3,10 @@
 
 namespace App\Core\Services\Youtube;
 
-use DateInterval;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use TitasGailius\Terminal\Terminal;
-use Youtube;
 
 class YoutubeDownload
 {
