@@ -53,10 +53,7 @@ class YoutubeDownload
                 'id' => $this->youtubeMetadata->getId(),
                 'options' => $this->buildDownloaderOptions($path, $name),
             ])
-            ->run('node downloader.js \
-                --options="{{ $options }}" \
-                --id="{{ $id }}" \
-            ');
+            ->run('node downloader.js --options="{{ $options }}" --id="{{ $id }}"');
 
         // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}
 
