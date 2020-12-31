@@ -4,6 +4,7 @@ namespace App\Http\Auth\Controllers;
 
 use App\Core\Controller;
 use App\Core\Providers\RouteServiceProvider;
+use App\Http\Auth\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

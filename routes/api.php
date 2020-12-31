@@ -12,17 +12,6 @@
 |
 */
 
-use App\Http\Album\AlbumController;
-use App\Http\Search\SearchController;
-use App\Http\User\ArtistController;
-
-
-
-
-
-
-
-
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});

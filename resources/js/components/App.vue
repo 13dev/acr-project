@@ -3,7 +3,7 @@
         <div class="flex flex-1" style="height: calc(100% - 80px);">
             <sidebar></sidebar>
 
-            <div class="flex-1 relative" style="height: calc(100% - 60px);">
+            <div class="flex-1 relative" style="height: calc(100% - 70px);">
                 <search></search>
                 <div class="p-6 flex justify-center h-full overflow-y-scroll">
                     <div class="w-full">
