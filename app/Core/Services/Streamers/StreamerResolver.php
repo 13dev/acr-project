@@ -29,7 +29,7 @@ class StreamerResolver
                 $stream->setSong($song);
                 $response = $stream->stream();
 
-                dump("using streamer", $stream);
+                //dump("using streamer", $stream);
                 return $response;
             } catch (Exception $ex) {
                 continue;

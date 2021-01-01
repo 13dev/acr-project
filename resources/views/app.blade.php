@@ -14,6 +14,10 @@
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.2/css/all.css"/>
+    @if (Auth::check())
+        <meta name="artist" content='{!! Auth::user()->toJson() !!}' />
+    @endif
+
 </head>
 
 <body class="bg-gray-900 h-full font-sans text-gray-200 leading-loose">

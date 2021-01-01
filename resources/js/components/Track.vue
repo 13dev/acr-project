@@ -1,20 +1,21 @@
 <template>
-    <tr class="border-b border-gray-800 hover:bg-gray-700" ref="track">
+    <tr class="border-b border-gray-800 hover:bg-gray-700 " ref="track">
         <td class="p-2 w-10">{{ songtrack }}</td>
         <td class="p-2 w-10">
             <i
                 v-if="isCurrentlyPlaying()"
-                class="fas fa-compact-disc fa-spin text-axiom-500"
+                class="fas fa-compact-disc fa-spin text-green-500"
             ></i>
 
             <button
                 v-else
                 @click.prevent="setSoundAndCount()"
             >
-                <i class="fas fa-play-circle hover:text-axiom-500 text-gray-600 focus:outline-none"></i>
+                <i class="fas fa-play hover:text-axiom-500 focus:outline-none cursor-pointer"></i>
             </button>
         </td>
-        <td class="p-2">{{ song.title }}</td>
+        <td class="p-2 text-green-500" v-if="isCurrentlyPlaying()">{{ song.title }}</td>
+        <td class="p-2 hover:underline cursor-pointer" v-else @click.prevent="setSoundAndCount()">{{ song.title }}</td>
         <td class="p-2" v-if="displayArtist">
             <router-link
                 tag="button"
