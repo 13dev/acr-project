@@ -11,17 +11,19 @@ const router = new VueRouter({
     routes: routes
 });
 
-// We want to reset our temp queue before each page
-// This way when we click play, we can properly
-// set our queue based on current tracks.
+// Reset temp Queue before each page
 router.beforeEach((to, from, next) => {
     store.dispatch('player/resetTempQueue')
-
     next()
 })
+
+let artist = document.querySelector("meta[name='artist']");
+Vue.prototype.$artist = artist !== null ? JSON.parse(artist.getAttribute('content')) : null;
 
 const app = new Vue({
     el: '#app',
     store,
     router
 });
+
+
