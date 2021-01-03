@@ -34,7 +34,6 @@
 
 <script>
 import Playlist from "../../components/Playlist";
-
 export default {
     name: 'album',
     components: {
@@ -57,14 +56,7 @@ export default {
 
         songCount() {
             let count = this.songs.length
-
-            if (count === 1) {
-                return '1 song'
-            }
-
-            if (count > 1) {
-                return count + ' songs'
-            }
+            return count === 1 ? '1 song' : count + ' songs'
         },
 
     },

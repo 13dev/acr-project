@@ -50,7 +50,7 @@ export default {
         let player = new Plyr(this.$refs.player)
 
         player.on('ended', () => {
-            let next = _.findIndex(this.queue, (song) => song.id === this.song.id) + 1;
+            let next = _.findIndex(this.queue, song => song.id === this.song.id) + 1;
 
             if (!this.queue[next]) {
                 next = 0

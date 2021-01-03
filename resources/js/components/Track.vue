@@ -75,7 +75,7 @@ export default {
         ]),
         setSoundAndCount() {
             axios.get('/api/songs/played/' + this.song.id)
-                .then((response) => {
+                .then(response => {
                     if (response.status === 200) {
                         this.setSong(this.song)
                     }

@@ -57,8 +57,5 @@ export default {
     components: {
       Cover
     },
-    data() {
-        return {}
-    }
 }
 </script>

@@ -29,22 +29,13 @@ export default {
         ...mapActions('player', [
             'setSource'
         ]),
-
-        playtime(song) {
-            let seconds = Math.floor(song.length)
-            let minutes = Math.floor(seconds / 60)
-
-            seconds = seconds - (minutes * 60)
-
-            return minutes + ':' + (seconds.toString().padStart(2, 0))
-        },
     },
 
     beforeRouteEnter(to, from, next) {
         axios.all([
             axios.get('/api/songs/recently-added'),
-        ]).then(axios.spread(function (recentlyAdded) {
-            next(function (vm) {
+        ]).then(axios.spread( recentlyAdded => {
+            next(vm => {
                 vm.songs = recentlyAdded.data.data
             })
         }))
