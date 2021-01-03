@@ -172,13 +172,14 @@ return [
          */
         App\Core\Providers\AppServiceProvider::class,
         App\Core\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         App\Core\Providers\EventServiceProvider::class,
         App\Core\Providers\RouteServiceProvider::class,
         App\Core\Providers\TelescopeServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Core\Providers\DigitalOceanSpacesServiceProvider::class,
+        App\Core\Providers\BladeComponentsProvider::class,
+
         Imtigger\LaravelJobStatus\LaravelJobStatusBusServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*
