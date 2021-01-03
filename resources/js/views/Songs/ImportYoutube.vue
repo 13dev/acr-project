@@ -4,7 +4,7 @@
             <h2 class="font-bold text-3xl text-white leading-none mb-10">Import From Youtube</h2>
             <div class="mb-3 pt-0">
                 <input
-                    :disabled="importing"
+                    v-if="!importing"
                     v-model="url"
                     type="text"
                     placeholder="Youtube Url"
@@ -26,10 +26,10 @@
                 <button
                     class="px-8 py-2 rounded-full border border-green-600 text-green-600 max-w-max shadow-sm hover:shadow-md my-3"
                     @click.prevent="importMusic()"
-                    :disabled="importing"
+                    v-if="!importing"
                 >
                     <i class="fas fa-plus"></i>
-                    Import From Youtube
+                    Import
                 </button>
 
             </div>
