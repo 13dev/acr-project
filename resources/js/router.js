@@ -38,11 +38,15 @@ export const routes = [
         component: () => import('./views/Albums/Index'),
         name: 'albums',
     },
-
     {
         path: '/albums/:id',
         component: () => import('./views/Albums/Show'),
         name: 'album',
+    },
+    {
+        path: '/import-youtube',
+        component: () => import('./views/Songs/ImportYoutube'),
+        name: 'import-youtube',
     },
 ];
 

@@ -178,6 +178,7 @@ return [
         App\Core\Providers\TelescopeServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Core\Providers\DigitalOceanSpacesServiceProvider::class,
+        Imtigger\LaravelJobStatus\LaravelJobStatusBusServiceProvider::class,
     ],
 
     /*
