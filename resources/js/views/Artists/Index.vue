@@ -37,8 +37,8 @@ export default {
     beforeRouteEnter(to, from, next) {
         axios.all([
             axios.get('/api/artists'),
-        ]).then(axios.spread(function (artists) {
-            next(function (vm) {
+        ]).then(axios.spread( artists => {
+            next(vm => {
                 vm.artists = artists.data.data
             })
         }))

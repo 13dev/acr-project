@@ -119,8 +119,7 @@ export default {
         search() {
             axios.get('/api/search/' + this.query)
                 .then(response => this.results = response.data.data)
-                .catch(error => {
-                })
+                .catch(error => {})
         },
         focus() {
             this.focused = true

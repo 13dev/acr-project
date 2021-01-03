@@ -70,7 +70,7 @@ export default {
                 sources: [
                     {
                         src: state.source,
-                        type: 'audio/mp3',
+                        type: 'audio/mpeg',
                     },
                 ],
             }

@@ -115,8 +115,8 @@ export default {
             axios.get('/api/songs/top-songs'),
             axios.get('/api/songs/top-artists'),
             axios.get('/api/songs/top-albums'),
-        ]).then(axios.spread(function (topSongs, topArtists, topAlbums) {
-            next(function (vm) {
+        ]).then(axios.spread( (topSongs, topArtists, topAlbums)  => {
+            next( (vm) => {
                 vm.topSongs = topSongs.data.data
                 vm.topArtists = topArtists.data.data
                 vm.topAlbums = topAlbums.data.data
