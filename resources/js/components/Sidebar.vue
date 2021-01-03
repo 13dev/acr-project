@@ -31,6 +31,12 @@
                         <i class="fas fa-compact-disc"></i> Albums
                     </router-link>
                 </li>
+
+                <li class="sidebar__item">
+                    <router-link tag="button" to="/import-youtube" class="sidebar__link">
+                        <i class="fab fa-youtube"></i> Youtube Import
+                    </router-link>
+                </li>
             </ul>
 
         </div>

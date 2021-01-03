@@ -44,7 +44,8 @@ class YoutubeDownload
         Terminal::output($this->parseOutputDownload($outputCallback))->with([
             'id' => $this->getYoutubeMetadata()->getId(),
             'options' => $this->buildDownloaderOptions(),
-        ])->run('node downloader.js --options="{{ $options }}" --id="{{ $id }}"');
+            'downloader' => base_path('downloader.js'),
+        ])->run('node {{ $downloader }} --options="{{ $options }}" --id="{{ $id }}"');
 
         // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}
         return $youtubeObject;
@@ -58,7 +59,6 @@ class YoutubeDownload
     private function parseOutputDownload($outputCallback): Closure
     {
         return function ($type, $line) use ($outputCallback) {
-
             if ($type === Process::ERR) {
                 return;
             }

@@ -14,7 +14,7 @@
     }
 
     &__link {
-        @apply .block .font-semibold .px-4 .py-1 .border-l-4 .border-transparent .no-underline .text-gray-200 .text-sm .tracking-wider;
+        @apply .block .font-semibold .px-4 .py-1 .border-l-4 .border-transparent .no-underline .text-gray-200 .text-sm .tracking-wider .text-left;
 
         &:hover {
             @apply .text-white;
