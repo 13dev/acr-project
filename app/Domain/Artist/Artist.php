@@ -24,6 +24,7 @@ class Artist extends Authenticatable implements Searchable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -34,7 +35,6 @@ class Artist extends Authenticatable implements Searchable
     protected $hidden = [
         'password',
         'remember_token',
-        'is_admin',
     ];
 
     /**

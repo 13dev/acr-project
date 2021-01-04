@@ -56,6 +56,9 @@
 
         <div class="flex justify-end w-full" v-if="artist">
             <div class="mr-6 text-gray-200 no-underline flex items-center">
+                <div v-if="artist.is_admin" class="mx-2">
+                    <a href="/dashboard" class="text-gray-200">Dashboard</a>
+                </div>
                 <h3>Hello, {{ artist.name }}!</h3>
             </div>
             <div>

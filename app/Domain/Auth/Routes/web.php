@@ -87,7 +87,7 @@ Route::prefix('/dashboard/album')->middleware(['auth', 'admin'])->group(function
     Route::get('{album}/edit', [EditAlbumAction::class, 'view'])->name('dashboard.album-edit-view');
 
     //create view
-    Route::get('{album}', [CreateAlbumAction::class, 'view'])->name('dashboard.album-create-view');
+    Route::get('create', [CreateAlbumAction::class, 'view'])->name('dashboard.album-create-view');
 });
 
 
