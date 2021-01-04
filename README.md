@@ -1,5 +1,5 @@
 
-self::music is a client stream music platform build with laravel.
+self::music is a platform build with laravel.
 
 ![Logo](https://raw.githubusercontent.com/13dev/acr-project/master/public/images/logo.png)
 
