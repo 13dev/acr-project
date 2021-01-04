@@ -5,6 +5,7 @@ namespace App\Http\Album\Actions\Web;
 
 
 use App\Domain\Album\Album;
+use App\Domain\Artist\Artist;
 use App\Http\Album\Requests\CreateAlbumRequest;
 
 class CreateAlbumAction
@@ -18,6 +19,8 @@ class CreateAlbumAction
 
     public function view()
     {
-        return view('albums.create');
+        return view('albums.create', [
+            'artists' => Artist::all(),
+        ]);
     }
 }
