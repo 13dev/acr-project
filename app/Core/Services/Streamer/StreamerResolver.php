@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Core\Services\Streamers;
+namespace App\Core\Services\Streamer;
 
 
 use App\Domain\Song\Song;
@@ -12,6 +12,7 @@ class StreamerResolver
 {
     /**
      * Get all streamers on $streams and try to choose the one has no exceptions.
+     * TODO: change generic exception to specific exceptions
      * @param array $streams
      * @param Song $song
      * @return mixed
@@ -27,10 +28,7 @@ class StreamerResolver
 
             try {
                 $stream->setSong($song);
-                $response = $stream->stream();
-
-                //dump("using streamer", $stream);
-                return $response;
+                return $stream->stream();
             } catch (Exception $ex) {
                 continue;
             }

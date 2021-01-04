@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Core\Services\Streamers;
+namespace App\Core\Services\Streamer;
 
 use Symfony\Component\HttpFoundation\Response;
 

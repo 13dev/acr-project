@@ -1,6 +1,11 @@
 <?php
 
 
+use App\Domain\Album\Album;
+use App\Http\Album\Actions\Web\CreateAlbumAction;
+use App\Http\Album\Actions\Web\DeleteAlbumAction;
+use App\Http\Album\Actions\Web\EditAlbumAction;
+use App\Http\Auth\Actions\DashboardAction;
 use App\Http\Auth\Controllers\AuthenticatedSessionController;
 use App\Http\Auth\Controllers\ConfirmablePasswordController;
 use App\Http\Auth\Controllers\EmailVerificationNotificationController;
@@ -62,3 +67,30 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout')
     ->middleware('auth');
+
+Route::get('/dashboard', DashboardAction::class)
+    ->name('dashboard')
+    ->middleware('auth', 'admin');
+
+
+Route::prefix('/dashboard/album')->middleware(['auth', 'admin'])->group(function () {
+    //edit
+    Route::put('{album}', EditAlbumAction::class)->name('dashboard.album-edit');
+
+    //create
+    Route::post('/', CreateAlbumAction::class)->name('dashboard.album-create');
+
+    // delete
+    Route::delete('/{album}', DeleteAlbumAction::class)->name('dashboard.album-delete');
+
+    //view edit
+    Route::get('{album}/edit', [EditAlbumAction::class, 'view'])->name('dashboard.album-edit-view');
+
+    //create view
+    Route::get('{album}', [CreateAlbumAction::class, 'view'])->name('dashboard.album-create-view');
+});
+
+
+
+
+

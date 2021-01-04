@@ -34,6 +34,7 @@ class Artist extends Authenticatable implements Searchable
     protected $hidden = [
         'password',
         'remember_token',
+        'is_admin',
     ];
 
     /**
@@ -44,6 +45,15 @@ class Artist extends Authenticatable implements Searchable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Check if artist is Admin.
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
 
     /**
      * An artist has many albums.

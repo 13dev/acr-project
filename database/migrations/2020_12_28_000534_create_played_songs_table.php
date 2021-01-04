@@ -21,7 +21,8 @@ class CreatePlayedSongsTable extends Migration
 
             $table->foreign('song_id')
                 ->references('id')
-                ->on('songs');
+                ->on('songs')
+                ->onDelete('cascade');
         });
     }
 
