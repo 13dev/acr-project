@@ -1,5 +1,9 @@
-To Run:
 
+self::music is a client stream music platform build with laravel.
+
+![Logo](https://raw.githubusercontent.com/13dev/acr-project/master/public/images/logo.png)
+
+To Run:
 - `docker-compose up -d`
 - `docker-compose exec app bash`
 - `composer install`
