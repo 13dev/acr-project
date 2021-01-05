@@ -18,7 +18,6 @@ class Song extends UuidModel implements Searchable
         'disc',
         'length',
         'path',
-        'mtime',
         'explicit',
         'compilation',
     ];

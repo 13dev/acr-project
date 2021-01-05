@@ -1,7 +1,7 @@
 import Browse from './views/Browse';
 import RecentlyAdded from './views/RecentlyAdded';
 import Queue from './views/Queue';
-
+import ImportYoutube from "./views/Songs/ImportYoutube";
 export const routes = [
     {
         path: '/',
@@ -45,7 +45,7 @@ export const routes = [
     },
     {
         path: '/import-youtube',
-        component: () => import('./views/Songs/ImportYoutube'),
+        component: ImportYoutube,
         name: 'import-youtube',
     },
 ];

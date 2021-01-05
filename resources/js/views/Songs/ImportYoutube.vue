@@ -55,7 +55,7 @@ export default {
         importMusic() {
             axios.post('/api/songs/import-youtube', {
                 url: this.url
-            }).then(response => {
+            }).then((response) => {
                 this.trackProgress(response.data.data.job_id);
                 this.importing = true;
             }).catch(console.log)

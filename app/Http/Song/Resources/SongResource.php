@@ -17,7 +17,6 @@ class SongResource extends JsonResource
             'length' => $this->length,
             'playtime' => $this->playtime,
             'path' => $this->path,
-            'mtime' => $this->mtime,
             'artist' => new ArtistResource($this->album->artist),
             'album' => new AlbumResource(
                 $this->whenLoaded('album')

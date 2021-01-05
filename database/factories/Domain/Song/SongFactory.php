@@ -72,7 +72,6 @@ class SongFactory extends Factory
             'disc' => $this->faker->boolean,
             'length' => $this->musicDetails->getDuration(),
             'path' => $music->getFileWithExtension(),
-            'mtime' => $this->faker->numberBetween(0, 10),
             'album_id' => Album::factory()->state([
                 'cover' => $music->getThumbnailWithExtension(),
             ]),
