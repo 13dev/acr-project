@@ -4,6 +4,7 @@ self::music is a platform build with laravel.
 ![Logo](https://raw.githubusercontent.com/13dev/acr-project/master/public/images/logo.png)
 
 To Run:
+- `cp .env.example .env`
 - `docker-compose up -d`
 - `docker-compose exec app bash`
 - `composer install`
