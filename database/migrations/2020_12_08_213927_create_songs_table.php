@@ -24,7 +24,6 @@ class CreateSongsTable extends Migration
             $table->boolean('explicit')->default(false);
             $table->boolean('compilation')->default(false);
             $table->text('path');
-            $table->integer('mtime');
             $table->timestamps();
 
             $table->foreign('album_id')
