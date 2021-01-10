@@ -9,7 +9,6 @@ use Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Response as ResponseAlias;
-use function GuzzleHttp\Psr7\stream_for;
 
 class SpacesStreamer extends Streamer
 {
