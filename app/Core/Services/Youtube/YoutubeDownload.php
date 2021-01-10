@@ -5,6 +5,7 @@ namespace App\Core\Services\Youtube;
 
 use Closure;
 use Illuminate\Support\Facades\File;
+use Log;
 use Symfony\Component\Process\Process;
 use TitasGailius\Terminal\Terminal;
 
@@ -40,12 +41,15 @@ class YoutubeDownload
             ->setPath($path)
             ->setFilename($name);
 
+        File::ensureDirectoryExists($youtubeObject->getPath());
+
         // Run command and pass closure to output method.
-        Terminal::output($this->parseOutputDownload($outputCallback))->with([
+        $response = Terminal::output($this->parseOutputDownload($outputCallback))->with([
             'id' => $this->getYoutubeMetadata()->getId(),
             'options' => $this->buildDownloaderOptions(),
             'downloader' => base_path('downloader.js'),
         ])->run('node {{ $downloader }} --options="{{ $options }}" --id="{{ $id }}"');
+        $response->throw();
 
         // youtube-dl --audio-quality 0 --audio-format mp3 --continue --ignore-errors --extract-audio --output "{{ $outputPath }}{{ $outputName }}.%(ext)s" {{ $url }}
         return $youtubeObject;
@@ -60,6 +64,7 @@ class YoutubeDownload
     {
         return function ($type, $line) use ($outputCallback) {
             if ($type === Process::ERR) {
+                Log::alert($line);
                 return;
             }
 
@@ -130,7 +135,7 @@ class YoutubeDownload
     {
         $youtubeObject = $this->getYoutubeObject();
 
-        File::ensureDirectoryExists($youtubeObject->getPath());
+        File::ensureDirectoryExists($youtubeObject->getThumbPath());
         File::put($youtubeObject->getThumbnailLocation(), file_get_contents($url));
 
         return $youtubeObject->getThumbnailLocation();

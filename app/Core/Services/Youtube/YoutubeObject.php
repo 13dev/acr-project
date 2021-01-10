@@ -69,9 +69,11 @@ class YoutubeObject
     {
         $path = $path ?: '/';
 
-        if(!Str::endsWith('/', $path)) {
-            $this->path = $path . '/';
+        if(substr($path, -1) !== '/') {
+            $path .= '/';
         }
+
+        $this->path = $path;
 
         return $this;
     }
