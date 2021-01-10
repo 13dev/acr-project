@@ -4,11 +4,12 @@
 namespace App\Core\Services\Streamer;
 
 use Carbon\Carbon;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Utils;
 use Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Response as ResponseAlias;
+use function GuzzleHttp\Psr7\stream_for;
 
 class SpacesStreamer extends Streamer
 {
@@ -25,7 +26,7 @@ class SpacesStreamer extends Streamer
             $disk->getSize($filePath),
             basename($filePath),
             function ($offset, $length) use ($path) {
-                $stream = Stream::factory(fopen($path, 'rb'));
+                $stream = Utils::streamFor(fopen($path, 'rb'));
                 $stream->seek($offset);
                 while (!$stream->eof()) {
                     echo $stream->read($length);
