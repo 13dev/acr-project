@@ -18,20 +18,25 @@ class SpacesStreamer extends Streamer
 
         $disk = Storage::disk('spaces');
         $filePath = config('songs.spaces_path') . $this->song->path;
-        $path = $disk->temporaryUrl($filePath, Carbon::now()->addMinutes(5));
+        $tempPathFile = tempnam(sys_get_temp_dir(), 'music_');
+
+        file_put_contents($tempPathFile, $disk->get($filePath));
+
+        //$path = $disk->temporaryUrl($filePath, Carbon::now()->addMinutes(5));
 
         return ResponseAlias::streamed(
             $this->contentType,
             $disk->getSize($filePath),
             basename($filePath),
-            function ($offset, $length) use ($path) {
-                $stream = Utils::streamFor(fopen($path, 'rb'));
+            function ($offset, $length) use ($tempPathFile) {
+                $stream = Utils::streamFor(fopen($tempPathFile, 'rb'));
                 $stream->seek($offset);
                 while (!$stream->eof()) {
                     echo $stream->read($length);
                 }
                 $stream->close();
-            });
+            }
+        );
 
     }
 }
